@@ -1,3 +1,13 @@
+#' List all files of a specified type in a specified location
+#'
+#' @param file_location location of files to be listed
+#' @param file_type the extension type of the files to be listed
+#'
+#' @return list of files and locations
+#' @export
+#'
+#' @examples
+#' files <- list_files(file_location = "/rfs/LRWE_Proj59/jcfs2/Test", file_type = ".txt")$files
 list_files <- function(file_location,
                        file_type){
   #--------------------------------
