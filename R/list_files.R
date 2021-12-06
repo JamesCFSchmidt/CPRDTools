@@ -15,7 +15,7 @@ list_files <- function(file_location,
   if(missing(file_type)){stop("Specify file type")}
   if(!any(is.character(c(file_location,file_type)))){stop("Specify file_location, file_type as.char")}
   #--------------------------------
-  if(any(c("ALL","all","All")%in%file_type)){
+  if(tolower(file_type)=="all"){
     files_list <- data.frame("files"=list.files(path=file_location,full.names=T))
   }else{
     files_list <- data.frame("files"=list.files(path=file_location,pattern=file_type,full.names=T))
