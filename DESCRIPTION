@@ -1,0 +1,18 @@
+Package: CPRDTools
+Title: CPRD GOLD data wrangling
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "James",
+           family = "Schmidt",
+           role = c("aut", "cre"),
+           email = "jcfs2@leicester.ac.uk",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Load CPRD GOLD files and any additional or linked data into a SQLite database, allowing the extraction, updating and manipulation of CPRD GOLD primary care data.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
