@@ -5,31 +5,32 @@
 #'
 #' Able to automatically load in all or selected tables.
 #'
-#' Makes use the CPRDTools::list_cprd() function to define a list of all CPRD GOLD datasets avaialble in a given location.
+#' Appends multiple .txt (.zip) files together to form a CPRD GOLD tables
+#'
+#' Makes use the CPRDTools::list_cprd() function to define a list of all CPRD GOLD datasets available in a given location.
 #'
 #' @param db_path The file path to database location.
-#' @param file_location The file path location of files to be listed.
+#' @param file_location The file path location of files to be loaded.
 #' @param tables_to_load The CPRD GOLD tables (datasets) to be loaded.
 #' @param folder Logical indicator of the use of sub-folders.
 #' @param zip Logical indicator if the files are compressed.
 #' @param load_mapping Logical indicator if the mapping files are to be loaded.
-#' @param overwrite Logical indicator if tables already exist in database and so require their overwriting.
+#' @param overwrite Logical indicator if tables already exist in database and so requires overwriting.
 #'
 #' @export
 #'
 load_cprd <- function(db_path,
                       file_location,
                       tables_to_load,
-                      folder,
-                      zip,
-                      load_mapping,
-                      overwrite){
-  #===============================
+                      folder = FALSE,
+                      zip = TRUE,
+                      load_mapping = FALSE,
+                      overwrite = FALSE){
   if(missing(db_path)){stop("Specify database file path location")}
   if(missing(file_location)){stop("Specify location of files")}
   if(missing(tables_to_load)){stop("Specify names of tables to load")}
-  if(!any(is.character(c(db_path,file_location,tables_to_load))))
-  {stop("Specify db_path, file_location, tables_to_load as.char")}
+  if(!any(is.character(c(db_path,file_location,tables_to_load)))){
+    stop("Specify db_path, file_location, tables_to_load as.char")}
   sqlite <- DBI::dbDriver("SQLite")
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   start_time <- Sys.time()
