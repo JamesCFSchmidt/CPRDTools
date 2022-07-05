@@ -1,4 +1,4 @@
-#' List all files of a specified type in a specified location
+#' List all files of a specified type in a specified location.
 #'
 #' @param file_location The file path location of files to be listed.
 #' @param file_type     The extension type of the files to be listed.
