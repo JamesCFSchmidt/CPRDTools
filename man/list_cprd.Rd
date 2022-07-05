@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_cprd.R
 \name{list_cprd}
 \alias{list_cprd}
-\title{List all CPRD GOLD files in a specified location}
+\title{List all CPRD GOLD files in a specified location.}
 \usage{
 list_cprd(file_location, folder, zip)
 }

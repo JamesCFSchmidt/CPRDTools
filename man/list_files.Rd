@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_files.R
 \name{list_files}
 \alias{list_files}
-\title{List all files of a specified type in a specified location}
+\title{List all files of a specified type in a specified location.}
 \usage{
 list_files(file_location, file_type)
 }
@@ -15,7 +15,7 @@ list_files(file_location, file_type)
 File location and data frame of files in location
 }
 \description{
-List all files of a specified type in a specified location
+List all files of a specified type in a specified location.
 }
 \examples{
 files <- list_files(file_location = "/rfs/LRWE_Proj59/jcfs2/Test",

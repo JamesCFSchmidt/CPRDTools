@@ -2,22 +2,22 @@
 % Please edit documentation in R/load_cprd.R
 \name{load_cprd}
 \alias{load_cprd}
-\title{Load all CPRD GOLD data}
+\title{Load all CPRD GOLD data.}
 \usage{
 load_cprd(
   db_path,
   file_location,
   tables_to_load,
-  folder,
-  zip,
-  load_mapping,
-  overwrite
+  folder = FALSE,
+  zip = TRUE,
+  load_mapping = FALSE,
+  overwrite = FALSE
 )
 }
 \arguments{
 \item{db_path}{The file path to database location.}
 
-\item{file_location}{The file path location of files to be listed.}
+\item{file_location}{The file path location of files to be loaded.}
 
 \item{tables_to_load}{The CPRD GOLD tables (datasets) to be loaded.}
 
@@ -27,9 +27,16 @@ load_cprd(
 
 \item{load_mapping}{Logical indicator if the mapping files are to be loaded.}
 
-\item{overwrite}{Logical indicator if tables already exist in database and so require their overwriting.}
+\item{overwrite}{Logical indicator if tables already exist in database and so requires overwriting.}
 }
 \description{
 Loads all CPRD GOLD datasets: Additional, Clinical, Consultation, Immunisation, Patient,
-Practice, Referral, Staff, Test and Therapy into a SQLite database
+Practice, Referral, Staff, Test and Therapy into a SQLite database.
+}
+\details{
+Able to automatically load in all or selected tables.
+
+Appends multiple .txt (.zip) files together to form a CPRD GOLD tables
+
+Makes use the CPRDTools::list_cprd() function to define a list of all CPRD GOLD datasets available in a given location.
 }
