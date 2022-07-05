@@ -12,7 +12,7 @@ list_files(file_location, file_type)
 \item{file_type}{The extension type of the files to be listed.}
 }
 \value{
-list of files and locations
+File location and data frame of files in location
 }
 \description{
 List all files of a specified type in a specified location
