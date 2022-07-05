@@ -3,7 +3,7 @@
 #' @param file_location The file path location of files to be listed.
 #' @param file_type     The extension type of the files to be listed.
 #'
-#' @return list of files and locations
+#' @return File location and data frame of files in location
 #' @export
 #'
 #' @examples
