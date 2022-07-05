@@ -1,4 +1,4 @@
-#' List all CPRD GOLD files in a specified location
+#' List all CPRD GOLD files in a specified location.
 #'
 #' List CPRD GOLD files in only a single location, can accept the use of sub-foldering
 #' i.e. C:/CPRD_Extract/patient_data, C:/CPRD_Extract/practice_data,
