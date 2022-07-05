@@ -2,3 +2,4 @@
 
 export(list_cprd)
 export(list_files)
+export(load_cprd)
