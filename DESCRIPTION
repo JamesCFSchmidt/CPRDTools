@@ -24,5 +24,6 @@ Imports:
     readxl,
     RSQLite,
     stats,
+    stringi,
     stringr,
     utils
