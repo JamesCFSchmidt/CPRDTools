@@ -4,11 +4,11 @@
 #' Practice, Referral, Staff, Test and Therapy into a SQLite database.
 #'
 #' Able to automatically load in all or selected tables.
-#'
 #' Appends multiple .txt (.zip) files together to form a CPRD GOLD tables.
-#'
 #' Makes use the CPRDTools::list_cprd() function to define a list of all CPRD GOLD datasets available in a given location.
 #'
+#' Note mapping is used to map CPRD GOLD description codes to a description file, the 'lookup' file.
+#' This file is derived from CPRD
 #' @param db_path The file path to database location.
 #' @param file_location The file path location of files to be loaded.
 #' @param tables_to_load The CPRD GOLD tables (datasets) to be loaded.
@@ -161,17 +161,8 @@ load_cprd <- function(db_path,
   }
   rm(i)
   if(load_mapping==T){
-    RSQLite::dbWriteTable(connex,name='cprd_spec',
-                 value=readRDS("R:/LRWE_Proj59/jcfs2/Database/ClinicalCoding/cprd_spec.rds"),
-                 append=T)
-    RSQLite::dbWriteTable(connex,name='lookup_entity',
-                 value=readRDS("R:/LRWE_Proj59/jcfs2/Database/ClinicalCoding/entity.rds"),
-                 append=T)
     RSQLite::dbWriteTable(connex,name='lookup_table',
                  value=readRDS("R:/LRWE_Proj59/jcfs2/Database/ClinicalCoding/lookup_tab.rds"),
-                 append=T)
-    RSQLite::dbWriteTable(connex,name='products',
-                 value=readRDS("R:/LRWE_Proj59/jcfs2/Database/ClinicalCoding/product.rds"),
                  append=T)
   }
   loaded_files <- data.frame(cbind(stats::aggregate(load$Tab,by=list(load$Tab),FUN=length)[1],
