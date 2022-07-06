@@ -25,7 +25,7 @@ load_cprd(
 
 \item{zip}{Logical indicator if the files are compressed.}
 
-\item{load_mapping}{Logical indicator if the mapping files are to be loaded.}
+\item{load_mapping}{Logical indicator if the mapping/look-up files are to be loaded.}
 
 \item{overwrite}{Logical indicator if tables already exist in database and so requires overwriting.}
 }
@@ -36,7 +36,7 @@ Practice, Referral, Staff, Test and Therapy into a SQLite database.
 \details{
 Able to automatically load in all or selected tables.
 
-Appends multiple .txt (.zip) files together to form a CPRD GOLD tables
+Appends multiple .txt (.zip) files together to form a CPRD GOLD tables.
 
 Makes use the CPRDTools::list_cprd() function to define a list of all CPRD GOLD datasets available in a given location.
 }

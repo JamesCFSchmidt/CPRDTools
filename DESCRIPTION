@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "jcfs2@leicester.ac.uk",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Load CPRD GOLD files and any additional or linked data into a SQLite database, allowing the extraction, updating and manipulation of CPRD GOLD primary care data.
+Description: Load CPRD GOLD files and any additional or linked data into a SQLite database, allowing the extraction, updating and manipulation of CPRD GOLD primary care and its associated data.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

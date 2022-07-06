@@ -5,7 +5,7 @@
 #'
 #' Able to automatically load in all or selected tables.
 #'
-#' Appends multiple .txt (.zip) files together to form a CPRD GOLD tables
+#' Appends multiple .txt (.zip) files together to form a CPRD GOLD tables.
 #'
 #' Makes use the CPRDTools::list_cprd() function to define a list of all CPRD GOLD datasets available in a given location.
 #'
@@ -14,7 +14,7 @@
 #' @param tables_to_load The CPRD GOLD tables (datasets) to be loaded.
 #' @param folder Logical indicator of the use of sub-folders.
 #' @param zip Logical indicator if the files are compressed.
-#' @param load_mapping Logical indicator if the mapping files are to be loaded.
+#' @param load_mapping Logical indicator if the mapping/look-up files are to be loaded.
 #' @param overwrite Logical indicator if tables already exist in database and so requires overwriting.
 #'
 #' @export
@@ -110,11 +110,8 @@ load_cprd <- function(db_path,
             }
           }
         }
-  #--------------------------------
   load <- data.frame()
-  #load all or selected CPRD files
   if(!all(tables_to_load %in% c("ALL","all","All"))){
-    #load selected files
     for(i in 1:length(tables_to_load)){
       if(tolower(tables_to_load[i])%in%tolower(tables$Table)==F){
         stop("Review tables specified for loading or subfoldering of file, folder=T")}else{
@@ -140,7 +137,6 @@ load_cprd <- function(db_path,
         }
     }
   }else{
-    #load all files in file list
     for(i in 1:length(tables$Table)){
       files <- as.matrix(cprd_files_list[which(tolower(cprd_files_list[,2])==tolower(tables$Table[i])),][,1])
       nfiles <- length(files)
@@ -164,22 +160,16 @@ load_cprd <- function(db_path,
     }
   }
   rm(i)
-  #--------------------------------
-  #load mapping files
   if(load_mapping==T){
-    #CPRD data specification
     RSQLite::dbWriteTable(connex,name='cprd_spec',
                  value=readRDS("R:/LRWE_Proj59/jcfs2/Database/ClinicalCoding/cprd_spec.rds"),
                  append=T)
-    #Entity look-up table
     RSQLite::dbWriteTable(connex,name='lookup_entity',
                  value=readRDS("R:/LRWE_Proj59/jcfs2/Database/ClinicalCoding/entity.rds"),
                  append=T)
-    #General mapping tables
     RSQLite::dbWriteTable(connex,name='lookup_table',
                  value=readRDS("R:/LRWE_Proj59/jcfs2/Database/ClinicalCoding/lookup_tab.rds"),
                  append=T)
-    #Product Lookup table
     RSQLite::dbWriteTable(connex,name='products',
                  value=readRDS("R:/LRWE_Proj59/jcfs2/Database/ClinicalCoding/product.rds"),
                  append=T)
