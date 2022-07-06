@@ -1,7 +1,7 @@
 #' Delete a single or multiple tables in a database.
 #'
-#' @param db_path The file path to the database location.
-#' @param remove_tables The table(s) to be removed.
+#' @param db_path string, the file path to the database location.
+#' @param remove_tables string vector, the table(s) to be removed.
 #'
 #' @export
 #'

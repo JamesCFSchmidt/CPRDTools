@@ -1,28 +1,39 @@
 #' List all CPRD GOLD files in a specified location.
 #'
-#' List CPRD GOLD files in only a single location, can accept the use of sub-foldering
-#' i.e. C:/CPRD_Extract/patient_data, C:/CPRD_Extract/practice_data,
-#' vs C:/CPRD_Extract/Patient/patient_data, C:/CPRD_Extract/Practice/practice_data,
+#' List CPRD GOLD files in only a single location, can accept the use of sub-folders:
+#'     i.e.
+#'     C:/CPRD_Extract/patient_data, C:/CPRD_Extract/practice_data,
+#'     vs
+#'     C:/CPRD_Extract/Patient/patient_data, C:/CPRD_Extract/Practice/practice_data,
 #'
-#' @param file_location The file path location of files to be listed.
-#' @param folder        Logical indicator of the use of sub-folders.
-#' @param zip           Logical indicator if the files are compressed.
+#' @param file_location string, the file path location of files to be listed.
+#' @param folder logical, the use of sub-folders.
+#'  *'TRUE': Sub-folders used, the data are in sub-folders specific to a table.
+#'  *'FLASE' (default): no sub-folders are used, the data in single location.
+#' @param zip logical, if the files are compressed.
+#'  *'TRUE' (default): files compressed.
+#'  *'FALSE': files uncompressed.
 #'
-#' @return File location, data frame of CPRD GOLD files and data frame of CPRD GOLD tables (datasets)
 #' @export
 #'
 list_cprd <- function(file_location,
-                      folder,
-                      zip){
-  if(missing(file_location)){stop("Specify location of files")}
-  if(!is.character(file_location)){stop("Specify file_location as.char")}
+                      folder=FALSE,
+                      zip=TRUE){
+  if(missing(file_location)){
+    stop("Specify location of files")}
+  if(!is.character(file_location)){
+    stop("Specify file_location as.char")}
   cprd_files <- c("Additional","Clinical","Consultation","Immunisation","Immunization",
                   "Patient","Practice","Referral", "Staff", "Test", "Therapy")
   n_cprd <- length(cprd_files)
-  if(missing(folder)){stop("Specify if files seperated into folders")}else{
-    if(missing(zip)){stop("Specify file compression")}else{
-      if(!is.logical(folder)){stop("Specify folder as logical T/F")}else{
-        if(!is.logical(zip)){stop("Specify zip as logical T/F")}else{
+  if(missing(folder)){
+    stop("Specify if files seperated into folders")}else{
+    if(missing(zip)){
+      stop("Specify file compression")}else{
+      if(!is.logical(folder)){
+        stop("Specify folder as logical T/F")}else{
+        if(!is.logical(zip)){
+          stop("Specify zip as logical T/F")}else{
           if(folder==T){
             cprd_folder_list <- data.frame("files"=list.dirs(path=file_location,
                                                              recursive=F,

@@ -3,10 +3,10 @@
 #' Indexing allows for query speed improvements through the generation of an index on a specified field.
 #' This is performed singularly for each field.
 #'
-#' @param db_path The file path to the database location.
-#' @param index_name The unique name given to the index.
-#' @param index_table The table in which the field to be indexed is located.
-#' @param index_field The field to be indexed.
+#' @param db_path string, the file path to the database location.
+#' @param index_name string, the unique name given to the index.
+#' @param index_table string, the table in which the field to be indexed is located.
+#' @param index_field string, the field to be indexed.
 #'
 #' @export
 #'

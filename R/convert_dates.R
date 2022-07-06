@@ -2,9 +2,9 @@
 #'
 #' Note date format provided is input format of the field to be converted.
 #'
-#' @param data The dataset in which a field must be converted.
-#' @param date_fields The field to be converted.
-#' @param format The input format of the field to be converted.
+#' @param data the dataset in which a field must be converted.
+#' @param date_fields string vector, the field to be converted.
+#' @param format string, the input format of the field to be converted, default '%d/%m/%Y'.
 #'
 #' @export
 #'

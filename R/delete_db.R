@@ -2,7 +2,7 @@
 #'
 #' Prompted with y/n input on deletion.
 #'
-#' @param db_path The file path to the database location.
+#' @param db_path string, the file path to the database location.
 #'
 #' @export
 #'

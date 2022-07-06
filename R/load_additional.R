@@ -1,18 +1,19 @@
-#' Load additional data into the database
+#' Load additional data into a database.
 #'
-#' Load in CPRD/non-CPRD specific files
-#' Accommodates varied file types
-#' - file format type: .txt, .csv, .excel, .xl, .xls, .xlsx, .dta, .rds
+#' Load in CPRD/non-CPRD specific files.
+#' Accommodates varied file types.
 #'
-#' Note non-automated, loads only singular file into a table
-#' Note simple data import, no additional data importing specification available
-#' If more complex data importing specification needed, use CPRDTools::load_global
+#' Note non-automated, loads only singular file into a table.
+#' Note simple data import, no additional data importing specification available.
+#' If more complex data importing specification needed, use CPRDTools::load_global.
 #'
-#' @param db_path The file path to the database location.
-#' @param file_location The file path location of the file to be loaded.
-#' @param table_name The name of the table to be loaded (or already loaded) in the database.
-#' @param type Character file type.
-#' @param overwrite Logical indicator if tables already exist in database and so requires overwriting.
+#' @param db_path string, the file path to the database location.
+#' @param file_location string, the file path location of files to be listed.
+#' @param table_name string, the name of the table to be loaded (or already loaded) in the database.
+#' @param type character file type: '.txt', '.csv', '.excel', '.xl', '.xls', '.xlsx', '.dta' or '.rds'
+#' @param overwrite logical, if table already exist in database and requires overwriting.
+#'  *'TRUE': table exists, delete table and write in new data.
+#'  *'FALSE' (default): new table to be loaded.
 #'
 #' @export
 #'
@@ -20,7 +21,7 @@ load_additional <- function(db_path,
                             file_location,
                             table_name,
                             type,
-                            overwrite){
+                            overwrite=FALSE){
   if(missing(db_path)){
     stop("Specify database file path location")}
   if(missing(file_location)){

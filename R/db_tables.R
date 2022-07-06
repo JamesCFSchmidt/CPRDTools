@@ -1,6 +1,6 @@
-#' Display table(s) loaded in database.
+#' Display table(s) loaded in a database.
 #'
-#' @param db_path The file path to the database location.
+#' @param db_path string, the file path to the database location.
 #'
 #' @export
 #'
