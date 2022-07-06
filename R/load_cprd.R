@@ -9,13 +9,23 @@
 #'
 #' Note mapping is used to map CPRD GOLD description codes to a description file, the 'lookup' file.
 #' This file is derived from CPRD
-#' @param db_path The file path to database location.
-#' @param file_location The file path location of files to be loaded.
-#' @param tables_to_load The CPRD GOLD tables (datasets) to be loaded.
-#' @param folder Logical indicator of the use of sub-folders.
-#' @param zip Logical indicator if the files are compressed.
+#'
+#' @param db_path string, the file path to the database location.
+#' @param file_location string, the file path location of files to be listed.
+#' @param table_name string vector, the name of the table to be loaded (or already loaded) in the database.
+#'  *can specify 'all', 'All' or 'ALL' or c('patient','practice')
+#' @param folder logical, the use of sub-folders.
+#'  *'TRUE': Sub-folders used, the data are in sub-folders specific to a table.
+#'  *'FLASE' (default): no sub-folders are used, the data in single location.
+#' @param zip logical, if the files are compressed.
+#'  *'TRUE' (default): files compressed.
+#'  *'FALSE': files uncompressed.
 #' @param load_mapping Logical indicator if the mapping/look-up files are to be loaded.
-#' @param overwrite Logical indicator if tables already exist in database and so requires overwriting.
+#'  *'TRUE': no lookup mapping table required.
+#'  *'FALSE' (default): load CPRD GOLD lookup mapping table.
+#' @param overwrite logical, if table already exist in database and requires overwriting.
+#'  *'TRUE': table exists, delete table and write in new data.
+#'  *'FALSE' (default): new table to be loaded.
 #'
 #' @export
 #'
@@ -26,9 +36,12 @@ load_cprd <- function(db_path,
                       zip = TRUE,
                       load_mapping = FALSE,
                       overwrite = FALSE){
-  if(missing(db_path)){stop("Specify database file path location")}
-  if(missing(file_location)){stop("Specify location of files")}
-  if(missing(tables_to_load)){stop("Specify names of tables to load")}
+  if(missing(db_path)){
+    stop("Specify database file path location")}
+  if(missing(file_location)){
+    stop("Specify location of files")}
+  if(missing(tables_to_load)){
+    stop("Specify names of tables to load")}
   if(!any(is.character(c(db_path,file_location,tables_to_load)))){
     stop("Specify db_path, file_location, tables_to_load as.char")}
   sqlite <- DBI::dbDriver("SQLite")
