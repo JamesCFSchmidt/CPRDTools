@@ -35,8 +35,9 @@ Practice, Referral, Staff, Test and Therapy into a SQLite database.
 }
 \details{
 Able to automatically load in all or selected tables.
-
 Appends multiple .txt (.zip) files together to form a CPRD GOLD tables.
-
 Makes use the CPRDTools::list_cprd() function to define a list of all CPRD GOLD datasets available in a given location.
+
+Note mapping is used to map CPRD GOLD description codes to a description file, the 'lookup' file.
+This file is derived from CPRD
 }
