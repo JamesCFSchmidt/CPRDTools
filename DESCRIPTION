@@ -27,3 +27,5 @@ Imports:
     stringi,
     stringr,
     utils
+Depends: 
+    R (>= 2.10)
