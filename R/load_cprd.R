@@ -161,9 +161,10 @@ load_cprd <- function(db_path,
   }
   rm(i)
   if(load_mapping==T){
-    RSQLite::dbWriteTable(connex,name='lookup_table',
-                 value=readRDS("R:/LRWE_Proj59/jcfs2/Database/ClinicalCoding/lookup_tab.rds"),
-                 append=T)
+    RSQLite::dbWriteTable(connex,
+                          name='lookup_table',
+                          value=lookup,
+                          append=T)
   }
   loaded_files <- data.frame(cbind(stats::aggregate(load$Tab,by=list(load$Tab),FUN=length)[1],
                                    stats::aggregate(load$Num,by=list(load$Tab),FUN=length)[2],
