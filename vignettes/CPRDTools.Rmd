@@ -2,7 +2,6 @@
 title: "CPRDTools: a CPRD data wrangling toolkit"
 output: pdf_document
 
-
 bibliography: CPRDTools_ref.bib
 abstract: The analysis of large scale data, and moreover the analysis of large scale electronic health records data is become more commonplace. The ease and ability of modern data generation and capture means there is the potential across almost all industries to capture more data now, than ever before and that equates to large data resources, with CPRD no exception. These large data resources, as attractive and appealing as they may be to researchers, pose a significant problem - how to manage all that data? CPRDTools is a collection of wrapper R functions intended to simplify the loading, extraction and management of Clinical Practice Research Datalink (CPRD) GOLD specific and associated electgronic health records data. Allowing for the loading of CPRD and non-CPRD data into a SQLite based database, providing an efficient, secure and updatable repository for the data, keeing the origional source files intact. Through data queries, user-defined data are drawn allowing for subsetting, joining and filtering in a signle step, creating alaysis ready data.
     
@@ -79,7 +78,19 @@ list_cprd(file_location = FILE.path,
           folder = T, 
           zip = T)
 ```
-In the `$table` output, the `list_cprd` function 
+In the `$table` output, the `list_cprd` function defines the tables and the count of *raw* files associated with that table in the data location. This outputted list is core to the automated loading of CPRD data, using the tables and files in each table to load all or a selection of specified CPRD GOLD files.  
+
+To load the `patient` data into a new database, the `load_cprd` function is defined as 
+```{r}
+load_cprd(db_path = DB.path, 
+          file_location = FILE.path, 
+          tables_to_load = "Patient", 
+          folder = T, 
+          zip = T, 
+          load_mapping = F, 
+          overwrite = F)
+```
+
 ## Extracting
 
 ## Maintenace and other tasks
