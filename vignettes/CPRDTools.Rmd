@@ -86,3 +86,22 @@ In the `$table` output, the `list_cprd` function
 ## Maintenace and other tasks
 
 # References
+---
+title: "CPRDTools"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{CPRDTools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(CPRDTools)
+```
