@@ -1,8 +1,8 @@
 #' Rename a table in a database.
 #'
-#' @param db_path The file path to the database location.
-#' @param old_name The table to be renamed.
-#' @param new_name The new table name.
+#' @param db_path string, the file path to the database location.
+#' @param old_name string, the table to be renamed.
+#' @param new_name string, the new table name.
 #'
 #' @export
 #'

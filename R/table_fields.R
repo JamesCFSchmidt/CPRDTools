@@ -1,7 +1,7 @@
 #' Display the fields in a table.
 #'
-#' @param db_path The file path to the database location.
-#' @param table_name The name of the table to be interrogated.
+#' @param db_path string, the file path to the database location.
+#' @param table_name string, the name of the table to be interrogated.
 #'
 #' @export
 #'

@@ -2,8 +2,8 @@
 #'
 #' Allows for all the complexity and customisability available in an SQLite SELECT statement.
 #'
-#' @param db_path The file path to the database location.
-#' @param query The SQL query code.
+#' @param db_path string, the file path to the database location.
+#' @param query string, the SQL query code.
 #'
 #' @export
 #'

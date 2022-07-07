@@ -1,10 +1,10 @@
-#' Update an existing CPRD GOLD table
+#' Update an existing CPRD GOLD table.
 #'
-#' Appends a single CPRD GOLD speficic raw file to an existing table.
+#' Appends a single CPRD GOLD specific .txt (.zip) file to an existing table.
 #'
-#' @param db_path The file path to database location.
-#' @param file_location The file path location of the file to be loaded.
-#' @param table_name The name of the table in the database to be updated.
+#' @param db_path string, the file path to the database location.
+#' @param file_location string, the file path location of the file to be loaded.
+#' @param table_name string, the name of the table in the database to be updated.
 #'
 #' @export
 #'

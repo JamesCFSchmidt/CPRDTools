@@ -1,11 +1,11 @@
-#' Execute direct SQL statements.
+#' Execute direct SQL statement.
 #'
 #' Used for data manipulation, database maintenance and improvements.
 #' i.e. UPDATE, DELETE, INSERT INTO, DROP TABLE
 #' Note does not output data.
 #'
-#' @param db_path The file path to the database location.
-#' @param statement The SQL statement to submitted.
+#' @param db_path string, the file path to the database location.
+#' @param statement string, the SQL statement to be submitted.
 #'
 #' @export
 #'
