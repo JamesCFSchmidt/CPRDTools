@@ -1,28 +1,32 @@
-#' Data query using defined user input.
+#' Data query using defined user inputs.
+#'
+#' The user inputs are used to generate a SQL code, used to extract the specified data.
 #'
 #' Note this function should only be applied in simple data query situations.
 #' It only allows for a singular join between two tables with limited customisability.
 #'
-#' The user inputs are used to generate a SQL code, used to extract the specified data.
-#'
-#' @param db_path The file path to the database location.
-#' @param unique_obs Logical for distinct (by all fields) final observations.
-#' @param field_list The list of fields extracted from the main table.
-#' @param from_table The main table from which the fields will be extracted. Data from a secondary table can be joined to this tables.
-#' @param join_to_table The secondary table that will be joined to the main table.
-#' @param join_fields The list of fields extracted from the secondary table.
-#' @param join_type The join type: inner, left or cross. Default is LEFT JOIN.
-#' @param join_on The unique variable found in both the main table (from_table) and secondary table (join_table) used to join the tables together.
-#' @param where_table Where clause used to subset or filter data, specify table where the clause will apply.
-#' @param where_filter The filtering value.
-#' @param order_field Field on which the order clause applies.
-#' @param order_type Ascending or descending order.
-#' @param limit_to integer to limit the return of data to.
+#' @param db_path string, the file path to the database location.
+#' @param unique_obs Logical, for distinct (by all fields) final observations.
+#'  *'TRUE' (default): for distinct records.
+#'  *'FALSE': for non-distinct records.
+#' @param field_list string vector, the list of fields extracted from the main table.
+#' @param from_table string, the main table from which the fields will be extracted. Data from a secondary table can be joined to this tables.
+#' @param join_to_table string, the secondary table that will be joined to the main table.
+#' @param join_fields string vector, the list of fields extracted from the secondary table.
+#' @param join_type string, the join type: inner, left or cross.
+#'  *Default LEFT JOIN.
+#' @param join_on string, the unique variable found in both the main table (from_table) and secondary table (join_table) used to join the tables together.
+#' @param where_table string, Where clause used to subset or filter data, specify table where the clause will apply.
+#' @param where_filter string, the filtering value or condition.
+#' @param order_field string, field on which the order clause applies.
+#' @param order_type string, ascending (ASC) or descending (DESC) order.
+#'  *Default DESC.
+#' @param limit_to integer, number to limit the return of data to.
 #'
 #' @export
 #'
 query_builder <- function(db_path,
-                          unique_obs,
+                          unique_obs=TRUE,
                           field_list,
                           from_table,
                           join_to_table,
@@ -148,12 +152,20 @@ query_builder <- function(db_path,
     ifelse(tolower(order_field)%in%col_names_from & missing(order_type),{
       order=paste0("ORDER BY ",from_table,".",order_field," DESC")},{
         ifelse(tolower(order_field)%in%col_names_from & missing(order_type)==F,{
-          order_type <- stringi::stri_trans_toupper(order_type,locale="en")
+          order_type <- ifelse(substr(order_type,0,1)%in%c('A', 'a'),
+                               substr(stri_trans_toupper(order_type,locale="en"),0,3),
+                               substr(stri_trans_toupper(order_type,locale="en"),0,4))
+          if(!any(order_type%in%c('ASC','DESC'))){
+            stop('review order type, only ASC or DESC allowed')}
           paste0("ORDER BY ",from_table,".",order_field," ",order_type)},{
             ifelse(tolower(order_field)%in%col_names_join & missing(order_type),{
               order=paste0("ORDER BY ",join_to_table,".",order_field," DESC")},{
                 ifelse(tolower(order_field)%in%col_names_from & missing(order_type)==F,{
-                  order_type <- stringi::stri_trans_toupper(order_type,locale="en")
+                  order_type <- ifelse(substr(order_type,0,1)%in%c('A', 'a'),
+                                       substr(stri_trans_toupper(order_type,locale="en"),0,3),
+                                       substr(stri_trans_toupper(order_type,locale="en"),0,4))
+                  if(!any(order_type%in%c('ASC','DESC'))){
+                    stop('review order type, only ASC or DESC allowed')}
                   paste0("ORDER BY ",join_to_table,".",order_field," ",order_type)},
                   stop("Review order column spcified")
                 )}
@@ -163,7 +175,8 @@ query_builder <- function(db_path,
   )
   #limit number of rows------------
   limit <- ifelse(missing(limit_to),"",{
-    ifelse(!is.numeric(limit_to),{stop("Specify limit_to as numeric")},{
+    ifelse(!is.numeric(limit_to),{
+      stop("Specify limit_to as numeric")},{
       paste0("LIMIT ",limit_to)})
   })
   f_l <- matrix(nrow=length(field_list),ncol=1)
