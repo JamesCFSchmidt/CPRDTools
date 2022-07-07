@@ -35,7 +35,7 @@ This document aims to provide a simple and introductory overview of `CPRDTools` 
 ```{r}
 library(devtools)
 install_github("JamesCFSchmidt/CPRDTools")
-library(CPRDtools)
+library(CPRDTools)
 ```
 
 # CPRDTools overview
