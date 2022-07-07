@@ -13,43 +13,52 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-<style type="text/css">
-  body{
-  font-size: 12pt;
-}
-</style>
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE,comment = "#>")
-```
-
-```{r setup}
-library(CPRDTools)
 ```
 
 # Introduction
 
 The CPRD is one of the largest longitudinal medical records databases in the world, supported by the National Institute of Health (NIHR) and the Medicines and Healthcare products Regulatory Agency (MHRA). It was first established in 1987 as the Value Added Medical Products (VAMP) dataset, this grew into the General Practice Research Database (GPRD) in 1993, before its final transition into CPRD in 2012 [@Herrett2015].
 
-PRD GOLD data are comprised of ten separate datasets: patient, practice, staff, consultation, clinical, additional clinical details, referral, immunisation, test and therapy [@Padmanabhan2017]. These datasets contain their specific data and are linkable through a unique linkage key field, where key does not imply importance but a unique variable contained in two datasets allowing them to be joined, such as the CPRD-assigned and anonymised unique patient identifier 'patid'.
+PRD GOLD data are comprised of ten separate datasets: patient, practice, staff, consultation, clinical, additional clinical details, referral, immunisation, test and therapy [@Padmanabhan2017]. These datasets contain their specific data and are linkable through a unique linkage key field, where key does not imply importance but a unique variable contained in two datasets allowing them to be joined, such as the CPRD-assigned and anonymised unique patient identifier `patid`.
 
-Due to the size of CPRD, data extracted for research are spread over multiple text (\texttt{.txt}) files within each dataset to enable file transfer. This means that for CPRD clinical data, for instance, a researcher may receive their requested clinical data broken up over 25 individual text files. This is done to aid with file completeness and reduce turn-around times if errors are found. If an error occurred during the transfer of data between the data owner and the researcher or in the extraction of the requested data by the data owner, the error can potentially be limited to only select files, requiring only their replacement with the corrected/error-free versions. \\
+Due to the size of CPRD, data extracted for research are spread over multiple text (`.txt`) files within each dataset to enable file transfer. This means that for CPRD clinical data, for instance, a researcher may receive their requested clinical data broken up over 25 individual text files. This is done to aid with file completeness and reduce turn-around times if errors are found. If an error occurred during the transfer of data between the data owner and the researcher or in the extraction of the requested data by the data owner, the error can potentially be limited to only select files, requiring only their replacement with the corrected/error-free versions. 
 
-Often these text files are additionally zipped, or compressed, requiring that these files first be uncompressed or unzipped. These multiple files from each dataset (clinical, referral etc.) then need to be grouped together and amalgamated into a single 'table'. Tables are a collection of data of the same shape, from the same dataset. In CPRD, each separate dataset (patient, practice, clinical etc.) forms a table. These tables are then stored in the database.
+Often these text files are additionally zipped, or compressed, requiring that these files first be uncompressed or unzipped. These multiple files from each dataset (clinical, referral etc.) then need to be grouped together and amalgamated into a single `table`. Tables are a collection of data of the same shape, from the same dataset. In CPRD, each separate dataset (patient, practice, clinical etc.) forms a table. These tables are then stored in the SQLite database.
+
+SQLite is an opensource, SQL based database engine [@sqlite]. The use of a SQLite database provides an efficient storage solution, allowing for the loading, updating and maintenance of the database, all while retaining the original *raw* data files unaltered. An SQlite database permits for rapid data extraction through the use of data queries, drawing the required data from the database, allowing filtering, sub-setting, limiting and the joining of data in a single execution step.   
+
+This document aims to provide a simple and introductory overview of `CPRDTools` and its application to arbitrary (fictional) data. This data though are provided in the manner in which many CPRD data extract are received, where data are spread over multiple files and often located in sub-folders.
+
+`CPRDTools` are loaded using:
+```{r}
+library(devtools)
+install_github("JamesCFSchmidt/CPRDTools")
+library(CPRDtools)
+```
 
 # CPRDTools overview
 
-The functions within 'CPRDTools' broadly fall into three groups, categorised by their general application area: (1) - loading, (2) - maintenance and other tasks and (3) - extraction. *Loading* encompasses all functions used in the reading, converting and writing of data into the database including a function used to list all available files and all available CPRD files in a specified location, functions used in database maintenance, query speed improvements and date conversion functions fall under *maintenance and other tasks*, and finally, functions used to and in the process of drawing and retrieving data from the database fall within *extraction*.
+The functions within 'CPRDTools' broadly fall into three groups, categorised by their general application area: (1) - loading, (2) - maintenance and other tasks and (3) - extraction. **Loading** encompasses all functions used in the reading, converting and writing of data into the database including a function used to list all available files and all available CPRD files in a specified location, functions used in database maintenance, query speed improvements and date conversion functions fall under **maintenance and other tasks**, and finally, functions used to, and in the process of, drawing and retrieving data from the database fall within **extraction**.
 
-
-
-```{r, eval = FALSE}
-library(devtools)
-install_github("rOpenHealth/rEHR")
-library(rEHR)
+## The data
+```{r}
+DB.path="/rfs/LRWE_Proj59/jcfs2/Test"
+FILE.path = "/rfs/LRWE_Proj59/jcfs2/Test"
 ```
+
 
 ## Loading
 
+```{r}
+list_files(file_location = FILE.path,
+           file_type = ".txt")
+```
+
+
+## Extracting
+
+## Maintenace and other tasks
 
 # References
