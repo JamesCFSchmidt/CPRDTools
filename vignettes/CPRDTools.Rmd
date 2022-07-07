@@ -1,10 +1,9 @@
 ---
 title: "CPRDTools: a CPRD data wrangling toolkit"
-output: 
-  pdf_document:
-    toc: False
+output: pdf_document
+
+
 bibliography: CPRDTools_ref.bib
-documentclass: article
 abstract: The analysis of large scale data, and moreover the analysis of large scale electronic health records data is become more commonplace. The ease and ability of modern data generation and capture means there is the potential across almost all industries to capture more data now, than ever before and that equates to large data resources, with CPRD no exception. These large data resources, as attractive and appealing as they may be to researchers, pose a significant problem - how to manage all that data? CPRDTools is a collection of wrapper R functions intended to simplify the loading, extraction and management of Clinical Practice Research Datalink (CPRD) GOLD specific and associated electgronic health records data. Allowing for the loading of CPRD and non-CPRD data into a SQLite based database, providing an efficient, secure and updatable repository for the data, keeing the origional source files intact. Through data queries, user-defined data are drawn allowing for subsetting, joining and filtering in a signle step, creating alaysis ready data.
     
 vignette: >
@@ -86,22 +85,3 @@ In the `$table` output, the `list_cprd` function
 ## Maintenace and other tasks
 
 # References
----
-title: "CPRDTools"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{CPRDTools}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
-```{r setup}
-library(CPRDTools)
-```
