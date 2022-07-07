@@ -8,7 +8,7 @@
 #' If more complex data importing specification needed, use CPRDTools::load_global.
 #'
 #' @param db_path string, the file path to the database location.
-#' @param file_location string, the file path location of files to be listed.
+#' @param file_location string, the file path location of files to be loaded.
 #' @param table_name string, the name of the table to be loaded (or already loaded) in the database.
 #' @param type character file type: '.txt', '.csv', '.excel', '.xl', '.xls', '.xlsx', '.dta' or '.rds'
 #' @param overwrite logical, if table already exist in database and requires overwriting.

@@ -11,7 +11,7 @@
 #' This file is derived from CPRD
 #'
 #' @param db_path string, the file path to the database location.
-#' @param file_location string, the file path location of files to be listed.
+#' @param file_location string, the file path location of files to be loaded.
 #' @param table_name string vector, the name of the table to be loaded (or already loaded) in the database.
 #'  *can specify 'all', 'All' or 'ALL' or c('patient','practice')
 #' @param folder logical, the use of sub-folders.

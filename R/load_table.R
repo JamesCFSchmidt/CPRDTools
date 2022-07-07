@@ -4,13 +4,17 @@
 #'
 #' Can overwrite table already contained in database.
 #'
-#' Note: can be used when CPRD GOLD tables (not files) are spread across many different file locations
+#' Note: can be used when CPRD GOLD tables (not files) are spread across multiple file locations.
 #'
-#' @param db_path The file path to the database location.
-#' @param file_location The file path location of files to be loaded.
-#' @param table_name The name of the table to be loaded (or already loaded) in the database.
-#' @param zip Logical indicator if the files are compressed.
-#' @param overwrite Logical indicator if tables already exist in database and so requires overwriting.
+#' @param db_path string, the file path to the database location.
+#' @param file_location string, the file path location of files to be loaded.
+#' @param table_name string, the name of the table to be loaded (or already loaded) in the database.
+#' @param zip logical, if the files are compressed.
+#'  *'TRUE' (default): files compressed.
+#'  *'FALSE': files uncompressed.
+#' @param overwrite logical, if table already exist in database and requires overwriting.
+#'  *'TRUE': table exists, delete table and write in new data.
+#'  *'FALSE' (default): new table to be loaded.
 #'
 #' @export
 #'
