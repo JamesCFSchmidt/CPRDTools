@@ -32,7 +32,7 @@ Provided for in CPRDTools are function to help maintain and improve the database
 (3) Extraction: 
 Extracting data from the database can be achieved with a user defined data query, either using a simplified pre-defined structure or through the use of a SQL defined code. The SQL code provides the most customisable, flexible and comprehensive data extraction method but does require knowledge of SQL code, a great introduction can be found at https://www.sqlitetutorial.net/sqlite-select/.
 
-** A note on terminology:
+**Terminology:
 Database – single data repository, containing a collection of named tables.
 Table – a collection of data, of the same shape (number and layout of columns) and make-up (containing the same data such as patient information), usually named.
 Field – a variable or column within a table.

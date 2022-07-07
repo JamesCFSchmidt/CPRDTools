@@ -41,18 +41,17 @@ Loading, (2) Maintenance and other tasks and (3) Extraction.
     introduction can be found at
     <https://www.sqlitetutorial.net/sqlite-select/>.
 
-\*\* A note on terminology: Database – single data repository,
-containing a collection of named tables. Table – a collection of data,
-of the same shape (number and layout of columns) and make-up (containing
-the same data such as patient information), usually named. Field – a
-variable or column within a table. Query – a script command used to
-retrieve defined data from the database. Key – unique field or group of
-fields used to identify a record within a table, used to define
-relations between tables in a database and used to join two tables
-together in a query. Record – single row of information. SQL –
-Structured Query Language, pronounced “sequel” or “ess-cue-ell”, is a
-coding langue used is database management systems, such as MySQL or
-SQLite.
+\*\*Terminology: Database – single data repository, containing a
+collection of named tables. Table – a collection of data, of the same
+shape (number and layout of columns) and make-up (containing the same
+data such as patient information), usually named. Field – a variable or
+column within a table. Query – a script command used to retrieve defined
+data from the database. Key – unique field or group of fields used to
+identify a record within a table, used to define relations between
+tables in a database and used to join two tables together in a query.
+Record – single row of information. SQL – Structured Query Language,
+pronounced “sequel” or “ess-cue-ell”, is a coding langue used is
+database management systems, such as MySQL or SQLite.
 
 ## Instalation
 
