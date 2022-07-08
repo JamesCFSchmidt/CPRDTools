@@ -31,7 +31,6 @@ load_table <- function(db_path,
     stop("Specify names of tables to load")}
   if(!any(is.character(c(db_path,file_location,table_name)))){
     stop("Specify db_path, file_location, table_name as.char")}
-  sqlite <- DBI::dbDriver("SQLite")
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   start_time <- Sys.time()
   date_cols <- c("chsdate","frd","crd","tod","deathdate","lcd","uts","eventdate","sysdate")
@@ -119,6 +118,6 @@ load_table <- function(db_path,
                    "load_time" = time_diff
   )
   return(out_list)
-  rm(connex,sqlite,db_path,table_name,loaded_tables,tables,date_cols,
+  rm(connex,db_path,table_name,loaded_tables,tables,date_cols,
      overwrite,zip,load,start_time,end_time,time_diff)
 }

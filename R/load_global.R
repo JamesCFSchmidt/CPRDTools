@@ -23,7 +23,6 @@ load_global <- function(db_path,
     stop("Specify name of table to load")}
   if(!any(is.character(c(db_path,table_name)))){
     stop("Specify db_path,table_name as.char")}
-  sqlite <- DBI::dbDriver("SQLite")
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   loaded_tables <- DBI::dbListTables(connex)
   if(all(table_name%in%loaded_tables) & (missing(overwrite)==T|overwrite==F)){stop("Table already exists, (re)consider overwrite")}
@@ -40,5 +39,5 @@ load_global <- function(db_path,
   )
   DBI::dbDisconnect(connex)
   return(out_list)
-  rm(connex,sqlite,file_to_load,db_path,loaded_tables,table_name)
+  rm(connex,file_to_load,db_path,loaded_tables,table_name)
 }

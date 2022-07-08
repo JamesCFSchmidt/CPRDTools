@@ -13,7 +13,6 @@ delete_table <- function(db_path,
     stop("Specify tables to remove")}
   if(!any(is.character(c(db_path,remove_tables)))){
     stop("Specify db_path, remove_tables as.char")}
-  sqlite <- DBI::dbDriver("SQLite")
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   before_tables <- tolower(DBI::dbListTables(connex))
   if(!any(tolower(remove_tables)%in%before_tables)){stop("Review table(s) to be removed")}
@@ -28,5 +27,5 @@ delete_table <- function(db_path,
   )
   return(out_list)
   DBI::dbDisconnect(connex)
-  rm(connex,sqlite,db_path,remove_tables,before_tables,loaded_tables,i)
+  rm(connex,db_path,remove_tables,before_tables,loaded_tables,i)
 }

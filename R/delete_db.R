@@ -11,7 +11,6 @@ delete_db <- function(db_path){
     stop("Specify database")}
   if(!is.character(db_path)){
     stop("Specify db_path as.char")}
-  sqlite <- DBI::dbDriver("SQLite")
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   loaded_tables <- DBI::dbListTables(connex)
   message(cat(crayon::red("----------WARNING, DELETION IN PROGRESS----------\n")))
@@ -25,5 +24,5 @@ delete_db <- function(db_path){
                    "tables" = loaded_tables
   )
   return(out_list)
-  rm(connex,sqlite,db_path,loaded_tables,ans)
+  rm(connex,db_path,loaded_tables,ans)
 }

@@ -15,7 +15,6 @@ first_n <- function(db_path,
     stop("Specify table name")}
   if(!any(is.character(c(db_path,table_name)))){
     stop("Specify db_path, table_name as.char")}
-  sqlite <- DBI::dbDriver("SQLite")
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   loaded_tables <- tolower(DBI::dbListTables(connex))
   if(tolower(table_name) %in% loaded_tables==F){
@@ -29,5 +28,5 @@ first_n <- function(db_path,
                    "first_n_rows" = query_data
   )
   return(out_list)
-  rm(connex,sqlite,db_path,table_name,n,query,query_data,loaded_tables)
+  rm(connex,db_path,table_name,n,query,query_data,loaded_tables)
 }

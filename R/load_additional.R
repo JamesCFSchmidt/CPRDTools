@@ -30,7 +30,6 @@ load_additional <- function(db_path,
     stop("Specify name of table to load")}
   if(!any(is.character(c(db_path,file_location,type,table_name)))){
     stop("Specify db_path, file_location, type, table_name as.char")}
-  sqlite <- DBI::dbDriver("SQLite")
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   start_time <- Sys.time()
   loaded_tables <- DBI::dbListTables(connex)
@@ -76,6 +75,6 @@ load_additional <- function(db_path,
   )
   DBI::dbDisconnect(connex)
   return(out_list)
-  rm(connex,sqlite,db_path,file_location,type,table_name,overwrite,loaded_tables,
+  rm(connex,db_path,file_location,type,table_name,overwrite,loaded_tables,
      start_time,end_time,time_diff)
 }

@@ -15,7 +15,6 @@ query_direct <- function(db_path,
     stop("Specify query to executed")}
   if(!any(is.character(c(db_path,query)))){
     stop("Specify db_path, query as.char")}
-  sqlite <- DBI::dbDriver("SQLite")
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   start_time <- Sys.time()
   query_data <- data.frame(DBI::dbGetQuery(connex,query))
@@ -30,5 +29,5 @@ query_direct <- function(db_path,
                    "query_time" = time_diff
   )
   return(out_list)
-  rm(connex,sqlite,db_path,query,query_data,loaded_tables,start_time,end_time,time_diff)
+  rm(connex,db_path,query,query_data,loaded_tables,start_time,end_time,time_diff)
 }

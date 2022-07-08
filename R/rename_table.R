@@ -17,7 +17,6 @@ rename_table <- function(db_path,
     stop("Specify new table name")}
   if(!any(is.character(c(db_path,old_name,new_name)))){
     stop("Specify db_path, old_name or new_name as.char")}
-  sqlite <- DBI::dbDriver("SQLite")
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   before_tables <- tolower(DBI::dbListTables(connex))
   if(!any(tolower(old_name)%in%before_tables)){stop("Review table to be renamed")}
@@ -32,5 +31,5 @@ rename_table <- function(db_path,
   )
   return(out_list)
   DBI::dbDisconnect(connex)
-  rm(connex,sqlite,db_path,old_name, new_name,loaded_tables)
+  rm(connex,db_path,old_name, new_name,loaded_tables)
 }

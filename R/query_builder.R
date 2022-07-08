@@ -72,7 +72,6 @@ query_builder <- function(db_path,
   if(!missing(limit_to)){
     if(!any(is.numeric(limit_to))){
       stop("Specify limit_to as.num")}}
-  sqlite <- DBI::dbDriver("SQLite")
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   start_time <- Sys.time()
   loaded_tables <- tolower(DBI::dbListTables(connex))
@@ -214,7 +213,7 @@ query_builder <- function(db_path,
                    "query_time" = time_diff
   )
   return(out_list)
-  rm(connex,sqlite,db_path,unique_obs,field_list,from_table,join_type,join_to_table,join_on,
+  rm(connex,db_path,unique_obs,field_list,from_table,join_type,join_to_table,join_on,
      where_filter,order_field,order_type,limit_to,loaded_tables,col_names,join_fields,
      distinct,join,where,order,limit,query,query_data,f,col_names_from,col_names_join,
      start_time,end_time,time_diff)

@@ -24,7 +24,6 @@ add_index <- function(db_path,
     stop("Specify field corresponding to the index")}
   if(!any(is.character(c(db_path,index_name,index_table,index_field)))){
     stop("Specify db_path, index_name, index_table, index_field as.char")}
-  sqlite <- DBI::dbDriver("SQLite")
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   start_time <- Sys.time()
   statement = paste0("CREATE INDEX ",
@@ -43,6 +42,6 @@ add_index <- function(db_path,
                    "query_time" = time_diff
   )
   return(out_list)
-  rm(connex,sqlite,db_path,index_name,index_field,index_table,start_time,
+  rm(connex,db_path,index_name,index_field,index_table,start_time,
      end_time,time_diff,query)
 }

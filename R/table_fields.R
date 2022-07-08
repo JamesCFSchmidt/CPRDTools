@@ -13,7 +13,6 @@ table_fields <- function(db_path,
     stop("Specify table name")}
   if(!any(is.character(c(db_path,table_name)))){
     stop("Specify db_path, table_name as.char")}
-  sqlite <-DBI:: dbDriver("SQLite")
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   loaded_tables <- tolower(DBI::dbListTables(connex))
   if(tolower(table_name) %in% loaded_tables==F){
@@ -24,5 +23,5 @@ table_fields <- function(db_path,
                    "fields" = col_names
   )
   return(out_list)
-  rm(connex,sqlite,db_path,table_name,col_names,loaded_tables)
+  rm(connex,db_path,table_name,col_names,loaded_tables)
 }
