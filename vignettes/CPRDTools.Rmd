@@ -48,7 +48,10 @@ FILE.path = "/rfs/LRWE_Proj59/jcfs2/Test"
 ```
 
 ## Loading
+
 Before loading any data into the database, it is best practice to understand the layout of the *raw* data. This can be achieved by either navigating to the location where the data are stored or by employing the `list_files` and `list_cprd` functions. 
+
+### Listing available data
 The `list_files` function provides a list of all files of a specified type in a specified location. To view all text (`.txt`) files in the data location
 ```{r}
 list_files(file_location = FILE.path,
@@ -80,6 +83,9 @@ list_cprd(file_location = FILE.path,
 ```
 In the `$table` output, the `list_cprd` function defines the tables and the count of *raw* files associated with that table in the data location. This outputted list is core to the automated loading of CPRD data, using the tables and files in each table to load all or a selection of specified CPRD GOLD files.  
 
+### Loading all available data
+The `load_cprd` function, relying on the `list_cprd` function for file and table list from a specified data location is able to automatically load in a selection or all available CPRD GOLD files in a specified location. Importing, uncompressing (unzipping) and appending all files from a CPRD GOLD-specific table into a database.
+
 To load the `patient` data into a new database, the `load_cprd` function is defined as 
 ```{r}
 load_cprd(db_path = DB.path, 
@@ -89,6 +95,87 @@ load_cprd(db_path = DB.path,
           zip = T, 
           load_mapping = F, 
           overwrite = F)
+```
+The `patient` data are found in a sub-folder within the data location (`r folder=T`) and the data are compressed (`r zip=T`). As this is a new load of the database, no overwriting is required (`r overwrite=F`) and no CPRD specific mapping is needed (`r load_mapping=F`).
+
+Alternatively to specifying each individual table to load (*additional, clinical, consultation, immunisation, patient, practice, referral, staff, test, therapy*), the specification of the loading of *all* tables can be performed.
+```{r, eval=FALSE}
+load_cprd(db_path = DB.path, 
+          file_location = FILE.path, 
+          tables_to_load = "all", 
+          folder = F, 
+          zip = T, 
+          load_mapping = F, 
+          overwrite = F)
+```
+This returns an error
+```{r, echo=FALSE}
+load_cprd(db_path = DB.path, 
+          file_location = FILE.path, 
+          tables_to_load = "all", 
+          folder = F, 
+          zip = T, 
+          load_mapping = F, 
+          overwrite = F)
+```
+The error is due to the `patient` table already being contained in the database. The `r tables_to_load = "all"` should only be applied on new databases or in conjunction with `r overwrite = F`.
+The remainder of the CPRD GOLD data are loaded with
+```{r}
+load_cprd(db_path = DB.path, 
+          file_location = FILE.path, 
+          tables_to_load = "all", 
+          folder = F, 
+          zip = T, 
+          load_mapping = F, 
+          overwrite = F)
+```
+ The `$loaded_tables` output shows the current tables loaded and available in the database.
+ 
+### Loading a single CPRD table
+The `patient` table previously could have been loaded singularly using the `load_table` function. Similar to the `load_cprd` function, this will load CPRD-specific data tables, using the compiled list of available files and their respective tables generated in the `list_cprd` function. This function imports, unzips and appends the files specific to a CPRD GOLD table but performs the task on a single table at a time. 
+
+This may be of use when the data are stored in separate file locations, not within sub-folders in the same data location. The loading of the `practice` information is performed using
+```{r}
+load_table(db_path = DB.path,
+           file_location = FILE.path,
+           table_name = "practice",
+           zip = T,
+           overwrite = T)
+```
+Here `r overwrite=T` as the practice table was previously loaded.
+
+### Updating a CPRD GOLD table
+If you were to receive a new month or year of `patient` data, this would be appened to the data already contained in the database using
+```{r, eval=FALSE}
+update_table(db_path = DB.path,
+             file_location = "/rfs/LRWE_Proj59/jcfs2/Test/patient/305508.ms1_Extract_Patient_001.zip",
+             table_name = "PaTient")
+```
+Note that capitalisation of the table name for CPRD-specific tables in unimportant. In general, SQL and therefore SQLite is not case sensitive. 
+
+### Updating an additional file
+For peripheral or additional data, whether CPRD or non-CPRD specific, the use of the `load_additional` function is employed. This function loads a singular file into a table (new or existing). 
+```{r}
+load_additional(db_path = DB.path,
+                file_location = "/rfs/LRWE_Proj59/jcfs2/Test/hes_patient_19_253R.txt",
+                type = ".txt",
+                table_name = "hes_patient",
+                overwrite = F)
+```
+The accepted files types are `.txt, .csv, .dta, .rds, .excel, .xl, .xls` and `.xlsx` with no additional input for file importing.
+
+### Updating an additional file
+If sub-setting, manipulation or sheet selection, for instance, is required prior to the loading of a file into a table (new or existing) is required, it is first recommended to import the file in the usual manner into R. Once the data are in the format and layout that is required, the `load_global` function can be employed
+```{r}
+## first import the life table data from .csv
+life_table <- read.csv("/rfs/LRWE_Proj59/jcfs2/Database/Final.Datasets/ons_lt.csv")
+##sub-set the data to the required fields
+life_table <- life_table[,c("gender","year","age","pop_rate")]
+## load into database
+load_global(db_path = DB.path,
+            file_to_load = life_table,
+            table_name = "Life_table",
+            overwrite = F)
 ```
 
 ## Extracting
