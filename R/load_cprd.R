@@ -140,7 +140,7 @@ load_cprd <- function(db_path,
             if("pracid" %in% names(tmp)==F){
               tmp$pracid <- as.numeric(substr(tmp$patid,nchar(tmp$patid)-2,nchar(tmp$patid)))
             }
-            RSQLite::dbWriteTable(connex,name=paste(tables_to_load[i]),value=tmp,append=T)
+            DBI::dbWriteTable(connex,name=paste(tables_to_load[i]),value=tmp,append=T)
             message(cat(crayon::green(paste0("----------LOAD OF TABLE ",tables_to_load[i],", FILE No. ",j," SUCCESSFUL----------\n"))))
             l <- data.frame("Tab"=tables$Table[i],"Num"=as.numeric(j),"byte"=as.numeric(utils::object.size(tmp)),"nfile"=nfiles)
             load <- rbind(load,l)
@@ -163,7 +163,7 @@ load_cprd <- function(db_path,
         if("pracid" %in% names(tmp)==F){
           tmp$pracid <- as.numeric(substr(tmp$patid,nchar(tmp$patid)-2,nchar(tmp$patid)))
         }
-        RSQLite::dbWriteTable(connex,name=paste(tables$Table[i]),value=tmp,append=T)
+        DBI::dbWriteTable(connex,name=paste(tables$Table[i]),value=tmp,append=T)
         message(cat(crayon::green(paste0("----------LOAD OF TABLE ",tables$Table[i],", FILE No. ",j," SUCCESSFUL----------\n"))))
         l <- data.frame("Tab"=tables$Table[i],"Num"=as.numeric(j),"byte"=as.numeric(utils::object.size(tmp)),"nfile"=nfiles)
         load <- rbind(load,l)
@@ -174,7 +174,7 @@ load_cprd <- function(db_path,
   }
   rm(i)
   if(load_mapping==T){
-    RSQLite::dbWriteTable(connex,
+    DBI::dbWriteTable(connex,
                           name='lookup_table',
                           value=lookup,
                           append=T)
