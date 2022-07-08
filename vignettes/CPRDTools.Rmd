@@ -109,7 +109,7 @@ load_cprd(db_path = DB.path,
           overwrite = F)
 ```
 This returns an error
-```{r, echo=FALSE}
+```{r, echo=FALSE, error=TRUE}
 load_cprd(db_path = DB.path, 
           file_location = FILE.path, 
           tables_to_load = "all", 
@@ -123,7 +123,7 @@ The remainder of the CPRD GOLD data are loaded with
 ```{r}
 load_cprd(db_path = DB.path, 
           file_location = FILE.path, 
-          tables_to_load = "all", 
+          tables_to_load = c("clinical","Practice"), 
           folder = F, 
           zip = T, 
           load_mapping = F, 
