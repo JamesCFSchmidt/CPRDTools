@@ -177,7 +177,7 @@ load_global(db_path = DB.path,
 ## Extracting
 With the database successfully loaded with our CPRD GOLD and associated data, we are now able to perform data extracts from the database. Before executing data extracts, it is *best practice* to first interrogate the databases for loaded table (ignoring that this is provided after each load iteration previously) and the for the structure and layout of a selection of tables.
 ### List tables in the database
-In order to list all loaded tables in teh database, similar to the output in the `$loaded_tables`
+In order to list all loaded tables in the database, similar to the output in the `$loaded_tables`
 ## Maintenace and other tasks
 
 # References
