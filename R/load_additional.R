@@ -37,24 +37,29 @@ load_additional <- function(db_path,
   if(all(table_name%in%loaded_tables) & overwrite==T){DBI::dbRemoveTable(connex,table_name)
     message(cat(crayon::red(paste0("-------Overwrite = TRUE, DELETION OF ",table_name," COMPLETE-------\n"))))}
   ifelse(type==".txt",
-         {RSQLite::dbWriteTable(connex,name=table_name,
-                       value=readr::read_tsv(file_location),
+         {tmp=readr::read_tsv(file_location)
+          RSQLite::dbWriteTable(connex,name=table_name,
+                       value=tmp,
                        append=T)},{
                          ifelse(type==".dta",
-                                {RSQLite::dbWriteTable(connex,name=table_name,
-                                              value=haven::read_dta(file_location),
+                                {temp=haven::read_dta(file_location)
+                                RSQLite::dbWriteTable(connex,name=table_name,
+                                              value=tmp,
                                               append=T)},{
                                                 ifelse(type==".csv",
-                                                       {RSQLite::dbWriteTable(connex,name=table_name,
-                                                                     value=readr::read_csv2(file_location),
+                                                       {tmp=readr::read_csv2(file_location)
+                                                        RSQLite::dbWriteTable(connex,name=table_name,
+                                                                     value=tmp,
                                                                      append=T)},{
                                                                        ifelse(type==".rds",
-                                                                              {RSQLite::dbWriteTable(connex,name=table_name,
-                                                                                            value=readRDS(file_location),
+                                                                              {tmp=readRDS(file_location)
+                                                                                SQLite::dbWriteTable(connex,name=table_name,
+                                                                                            value=tmp,
                                                                                             append=T)},{
                                                                                               ifelse(type %in%c(".excel",".xl",".xls",".xlsx"),
-                                                                                                     {RSQLite::dbWriteTable(connex,name=table_name,
-                                                                                                                   value=readxl::read_excel(file_location),
+                                                                                                     {tmp==readxl::read_excel(file_location)
+                                                                                                       RSQLite::dbWriteTable(connex,name=table_name,
+                                                                                                                   value=tmp,
                                                                                                                    append=T)},{
                                                                                                                      stop("Review file type. Only .txt, .csv, .dta, .rds, .excel, .xl, .xls , .xlsx allowed")}
                                                                                               )}
@@ -79,6 +84,6 @@ load_additional <- function(db_path,
                    "load_time" = time_diff
   )
   return(out_list)
-  rm(connex,db_path,file_location,type,table_name,overwrite,loaded_tables,load,loaded_files,
+  rm(connex,db_path,file_location,type,table_name,overwrite,loaded_tables,load,loaded_files,tmp,
      start_time,end_time,time_diff)
 }
