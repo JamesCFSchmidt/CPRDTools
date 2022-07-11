@@ -63,18 +63,22 @@ load_additional <- function(db_path,
                          )}
   )
   message(cat(crayon::green(paste0("----------LOAD OF TABLE ",table_name," SUCCESSFUL----------\n"))))
+  load <- data.frame("Tab"=table_name,"byte"=as.numeric(utils::object.size(tmp)))
+  loaded_files <- data.frame(cbind(load$Tab,(load$byte/1024),round(load$byte/1073741824,4)))
+  names(loaded_files) <- c("table","size_Mb","size_Gb")
   end_time <- Sys.time()
   time_diff <- end_time-start_time
   loaded_tables <- DBI::dbListTables(connex)
+  DBI::dbDisconnect(connex)
   out_list <- list("database_location" = db_path,
-                   "table_loaded" = table_name,
+                   "loaded_table" = table_name,
+                   "load_report" = loaded_files,
                    "database_tables" = loaded_tables,
                    "load_start" = start_time,
                    "load_end" = end_time,
                    "load_time" = time_diff
   )
-  DBI::dbDisconnect(connex)
   return(out_list)
-  rm(connex,db_path,file_location,type,table_name,overwrite,loaded_tables,
+  rm(connex,db_path,file_location,type,table_name,overwrite,loaded_tables,load,loaded_files,
      start_time,end_time,time_diff)
 }
