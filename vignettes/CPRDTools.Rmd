@@ -38,7 +38,7 @@ The functions within 'CPRDTools' broadly fall into three groups, categorised by 
 
 ## The data
 
-```{r}
+```{r, include=FALSE}
 DB.path="/rfs/LRWE_Proj59/jcfs2/Test"
 FILE.path = "/rfs/LRWE_Proj59/jcfs2/Test"
 ```
@@ -134,7 +134,7 @@ This may be of use when the data are stored in separate file locations, not with
 ```{r}
 load_table(db_path = DB.path,
            file_location = FILE.path,
-           table_name = "practice",
+           table_name = "Practice",
            zip = T,
            overwrite = T)
 ```
