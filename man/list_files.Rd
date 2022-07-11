@@ -7,17 +7,10 @@
 list_files(file_location, file_type)
 }
 \arguments{
-\item{file_location}{The file path location of files to be listed.}
+\item{file_location}{string, the file path location of files to be listed.}
 
-\item{file_type}{The extension type of the files to be listed.}
-}
-\value{
-File location and data frame of files in location
+\item{file_type}{string, the extension type of the files to be listed.}
 }
 \description{
 List all files of a specified type in a specified location.
-}
-\examples{
-files <- list_files(file_location = "/rfs/LRWE_Proj59/jcfs2/Test",
-                    file_type = ".txt")$files
 }

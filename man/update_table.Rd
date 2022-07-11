@@ -2,17 +2,17 @@
 % Please edit documentation in R/update_table.R
 \name{update_table}
 \alias{update_table}
-\title{Update an existing CPRD GOLD table}
+\title{Update an existing CPRD GOLD table.}
 \usage{
 update_table(db_path, file_location, table_name)
 }
 \arguments{
-\item{db_path}{The file path to database location.}
+\item{db_path}{string, the file path to the database location.}
 
-\item{file_location}{The file path location of the file to be loaded.}
+\item{file_location}{string, the file path location of the file to be loaded.}
 
-\item{table_name}{The name of the table in the database to be updated.}
+\item{table_name}{string, the name of the table in the database to be updated.}
 }
 \description{
-Appends a single CPRD GOLD speficic raw file to an existing table.
+Appends a single CPRD GOLD specific .txt (.zip) file to an existing table.
 }

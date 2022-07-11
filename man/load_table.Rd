@@ -7,15 +7,19 @@
 load_table(db_path, file_location, table_name, zip = TRUE, overwrite = FALSE)
 }
 \arguments{
-\item{db_path}{The file path to the database location.}
+\item{db_path}{string, the file path to the database location.}
 
-\item{file_location}{The file path location of files to be loaded.}
+\item{file_location}{string, the file path location of files to be loaded.}
 
-\item{table_name}{The name of the table to be loaded (or already loaded) in the database.}
+\item{table_name}{string, the name of the table to be loaded (or already loaded) in the database.}
 
-\item{zip}{Logical indicator if the files are compressed.}
+\item{zip}{logical, if the files are compressed.
+*'TRUE' (default): files compressed.
+*'FALSE': files uncompressed.}
 
-\item{overwrite}{Logical indicator if tables already exist in database and so requires overwriting.}
+\item{overwrite}{logical, if table already exist in database and requires overwriting.
+*'TRUE': table exists, delete table and write in new data.
+*'FALSE' (default): new table to be loaded.}
 }
 \description{
 Used to load a single CPRD GOLD table compiled and appended of multiple raw .txt (.zip) files.
@@ -23,5 +27,5 @@ Used to load a single CPRD GOLD table compiled and appended of multiple raw .txt
 \details{
 Can overwrite table already contained in database.
 
-Note: can be used when CPRD GOLD tables (not files) are spread across many different file locations
+Note: can be used when CPRD GOLD tables (not files) are spread across multiple file locations.
 }

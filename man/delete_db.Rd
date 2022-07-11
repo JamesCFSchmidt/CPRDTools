@@ -7,7 +7,7 @@
 delete_db(db_path)
 }
 \arguments{
-\item{db_path}{The file path to the database location.}
+\item{db_path}{string, the file path to the database location.}
 }
 \description{
 Prompted with y/n input on deletion.

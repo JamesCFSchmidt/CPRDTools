@@ -4,20 +4,23 @@
 \alias{list_cprd}
 \title{List all CPRD GOLD files in a specified location.}
 \usage{
-list_cprd(file_location, folder, zip)
+list_cprd(file_location, folder = FALSE, zip = TRUE)
 }
 \arguments{
-\item{file_location}{The file path location of files to be listed.}
+\item{file_location}{string, the file path location of files to be listed.}
 
-\item{folder}{Logical indicator of the use of sub-folders.}
+\item{folder}{logical, the use of sub-folders.
+*'TRUE': Sub-folders used, the data are in sub-folders specific to a table.
+*'FLASE' (default): no sub-folders are used, the data in single location.}
 
-\item{zip}{Logical indicator if the files are compressed.}
-}
-\value{
-File location, data frame of CPRD GOLD files and data frame of CPRD GOLD tables (datasets)
+\item{zip}{logical, if the files are compressed.
+*'TRUE' (default): files compressed.
+*'FALSE': files uncompressed.}
 }
 \description{
-List CPRD GOLD files in only a single location, can accept the use of sub-foldering
-i.e. C:/CPRD_Extract/patient_data, C:/CPRD_Extract/practice_data,
-vs C:/CPRD_Extract/Patient/patient_data, C:/CPRD_Extract/Practice/practice_data,
+List CPRD GOLD files in only a single location, can accept the use of sub-folders:
+i.e.
+C:/CPRD_Extract/patient_data, C:/CPRD_Extract/practice_data,
+vs
+C:/CPRD_Extract/Patient/patient_data, C:/CPRD_Extract/Practice/practice_data,
 }

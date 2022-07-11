@@ -2,14 +2,14 @@
 % Please edit documentation in R/statement_direct.R
 \name{statement_direct}
 \alias{statement_direct}
-\title{Execute direct SQL statements.}
+\title{Execute direct SQL statement.}
 \usage{
 statement_direct(db_path, statement)
 }
 \arguments{
-\item{db_path}{The file path to the database location.}
+\item{db_path}{string, the file path to the database location.}
 
-\item{statement}{The SQL statement to submitted.}
+\item{statement}{string, the SQL statement to be submitted.}
 }
 \description{
 Used for data manipulation, database maintenance and improvements.

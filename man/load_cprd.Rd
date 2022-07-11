@@ -15,19 +15,28 @@ load_cprd(
 )
 }
 \arguments{
-\item{db_path}{The file path to database location.}
+\item{db_path}{string, the file path to the database location.}
 
-\item{file_location}{The file path location of files to be loaded.}
+\item{file_location}{string, the file path location of files to be loaded.}
 
-\item{tables_to_load}{The CPRD GOLD tables (datasets) to be loaded.}
+\item{folder}{logical, the use of sub-folders.
+*'TRUE': Sub-folders used, the data are in sub-folders specific to a table.
+*'FLASE' (default): no sub-folders are used, the data in single location.}
 
-\item{folder}{Logical indicator of the use of sub-folders.}
+\item{zip}{logical, if the files are compressed.
+*'TRUE' (default): files compressed.
+*'FALSE': files uncompressed.}
 
-\item{zip}{Logical indicator if the files are compressed.}
+\item{load_mapping}{Logical indicator if the mapping/look-up files are to be loaded.
+*'TRUE': no lookup mapping table required.
+*'FALSE' (default): load CPRD GOLD lookup mapping table.}
 
-\item{load_mapping}{Logical indicator if the mapping/look-up files are to be loaded.}
+\item{overwrite}{logical, if table already exist in database and requires overwriting.
+*'TRUE': table exists, delete table and write in new data.
+*'FALSE' (default): new table to be loaded.}
 
-\item{overwrite}{Logical indicator if tables already exist in database and so requires overwriting.}
+\item{table_name}{string vector, the name of the table to be loaded (or already loaded) in the database.
+*can specify 'all', 'All' or 'ALL' or c('patient','practice')}
 }
 \description{
 Loads all CPRD GOLD datasets: Additional, Clinical, Consultation, Immunisation, Patient,

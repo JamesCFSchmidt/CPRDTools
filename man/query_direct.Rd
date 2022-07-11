@@ -7,9 +7,9 @@
 query_direct(db_path, query)
 }
 \arguments{
-\item{db_path}{The file path to the database location.}
+\item{db_path}{string, the file path to the database location.}
 
-\item{query}{The SQL query code.}
+\item{query}{string, the SQL query code.}
 }
 \description{
 Allows for all the complexity and customisability available in an SQLite SELECT statement.

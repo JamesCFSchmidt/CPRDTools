@@ -7,9 +7,9 @@
 delete_table(db_path, remove_tables)
 }
 \arguments{
-\item{db_path}{The file path to the database location.}
+\item{db_path}{string, the file path to the database location.}
 
-\item{remove_tables}{The table(s) to be removed.}
+\item{remove_tables}{string vector, the table(s) to be removed.}
 }
 \description{
 Delete a single or multiple tables in a database.

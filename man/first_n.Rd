@@ -2,17 +2,17 @@
 % Please edit documentation in R/first_n.R
 \name{first_n}
 \alias{first_n}
-\title{Display the first n rows (records)}
+\title{Display the first n rows (records) in a table.}
 \usage{
 first_n(db_path, table_name, n)
 }
 \arguments{
-\item{db_path}{The file path to the database location.}
+\item{db_path}{string, the file path to the database location.}
 
-\item{table_name}{The name of the table to be interrogated.}
+\item{table_name}{string, the name of the table to be interrogated.}
 
-\item{n}{Integer of the number of rows to be displayed (default = 10)}
+\item{n}{integer, the number of rows to be displayed, default n = 10.}
 }
 \description{
-Display the first n rows (records)
+Display the first n rows (records) in a table.
 }

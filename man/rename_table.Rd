@@ -7,11 +7,11 @@
 rename_table(db_path, old_name, new_name)
 }
 \arguments{
-\item{db_path}{The file path to the database location.}
+\item{db_path}{string, the file path to the database location.}
 
-\item{old_name}{The table to be renamed.}
+\item{old_name}{string, the table to be renamed.}
 
-\item{new_name}{The new table name.}
+\item{new_name}{string, the new table name.}
 }
 \description{
 Rename a table in a database.

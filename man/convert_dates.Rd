@@ -7,11 +7,11 @@
 convert_dates(data, date_fields, format)
 }
 \arguments{
-\item{data}{The dataset in which a field must be converted.}
+\item{data}{the dataset in which a field must be converted.}
 
-\item{date_fields}{The field to be converted.}
+\item{date_fields}{string vector, the field to be converted.}
 
-\item{format}{The input format of the field to be converted.}
+\item{format}{string, the input format of the field to be converted, default '\%d/\%m/\%Y'.}
 }
 \description{
 Note date format provided is input format of the field to be converted.

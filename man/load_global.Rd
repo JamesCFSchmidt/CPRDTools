@@ -2,19 +2,21 @@
 % Please edit documentation in R/load_global.R
 \name{load_global}
 \alias{load_global}
-\title{Load table with a file from the global environment}
+\title{Load table with a file from the global environment.}
 \usage{
-load_global(db_path, file_to_load, table_name, overwrite)
+load_global(db_path, file_to_load, table_name, overwrite = FALSE)
 }
 \arguments{
-\item{db_path}{The file path to the database location.}
+\item{db_path}{string, the file path to the database location.}
 
-\item{file_to_load}{The file in the global environment to be loaded}
+\item{file_to_load}{string, the file in the global environment to be loaded.}
 
-\item{table_name}{The name of the table to be loaded (or already loaded) in the database.}
+\item{table_name}{string, the name of the table to be loaded (or already loaded) in the database.}
 
-\item{overwrite}{Logical indicator if tables already exist in database and so requires overwriting.}
+\item{overwrite}{logical, if table already exist in database and requires overwriting.
+*'TRUE': table exists, delete table and write in new data.
+*'FALSE' (default): new table to be loaded.}
 }
 \description{
-Best used when importing or manipulating data prior to loading into database
+Best used when importing or manipulating data prior to loading into database.
 }

@@ -7,9 +7,9 @@
 table_fields(db_path, table_name)
 }
 \arguments{
-\item{db_path}{The file path to the database location.}
+\item{db_path}{string, the file path to the database location.}
 
-\item{table_name}{The name of the table to be interrogated.}
+\item{table_name}{string, the name of the table to be interrogated.}
 }
 \description{
 Display the fields in a table.

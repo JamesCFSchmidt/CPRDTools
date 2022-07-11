@@ -2,11 +2,11 @@
 % Please edit documentation in R/query_builder.R
 \name{query_builder}
 \alias{query_builder}
-\title{Data query using defined user input.}
+\title{Data query using defined user inputs.}
 \usage{
 query_builder(
   db_path,
-  unique_obs,
+  unique_obs = TRUE,
   field_list,
   from_table,
   join_to_table,
@@ -21,36 +21,40 @@ query_builder(
 )
 }
 \arguments{
-\item{db_path}{The file path to the database location.}
+\item{db_path}{string, the file path to the database location.}
 
-\item{unique_obs}{Logical for distinct (by all fields) final observations.}
+\item{unique_obs}{Logical, for distinct (by all fields) final observations.
+*'TRUE' (default): for distinct records.
+*'FALSE': for non-distinct records.}
 
-\item{field_list}{The list of fields extracted from the main table.}
+\item{field_list}{string vector, the list of fields extracted from the main table.}
 
-\item{from_table}{The main table from which the fields will be extracted. Data from a secondary table can be joined to this tables.}
+\item{from_table}{string, the main table from which the fields will be extracted. Data from a secondary table can be joined to this tables.}
 
-\item{join_to_table}{The secondary table that will be joined to the main table.}
+\item{join_to_table}{string, the secondary table that will be joined to the main table.}
 
-\item{join_fields}{The list of fields extracted from the secondary table.}
+\item{join_fields}{string vector, the list of fields extracted from the secondary table.}
 
-\item{join_type}{The join type: inner, left or cross. Default is LEFT JOIN.}
+\item{join_type}{string, the join type: inner, left or cross.
+*Default LEFT JOIN.}
 
-\item{join_on}{The unique variable found in both the main table (from_table) and secondary table (join_table) used to join the tables together.}
+\item{join_on}{string, the unique variable found in both the main table (from_table) and secondary table (join_table) used to join the tables together.}
 
-\item{where_table}{Where clause used to subset or filter data, specify table where the clause will apply.}
+\item{where_table}{string, Where clause used to subset or filter data, specify table where the clause will apply.}
 
-\item{where_filter}{The filtering value.}
+\item{where_filter}{string, the filtering value or condition.}
 
-\item{order_field}{Field on which the order clause applies.}
+\item{order_field}{string, field on which the order clause applies.}
 
-\item{order_type}{Ascending or descending order.}
+\item{order_type}{string, ascending (ASC) or descending (DESC) order.
+*Default DESC.}
 
-\item{limit_to}{integer to limit the return of data to.}
+\item{limit_to}{integer, number to limit the return of data to.}
 }
 \description{
-Note this function should only be applied in simple data query situations.
-It only allows for a singular join between two tables with limited customisability.
+The user inputs are used to generate a SQL code, used to extract the specified data.
 }
 \details{
-The user inputs are used to generate a SQL code, used to extract the specified data.
+Note this function should only be applied in simple data query situations.
+It only allows for a singular join between two tables with limited customisability.
 }
