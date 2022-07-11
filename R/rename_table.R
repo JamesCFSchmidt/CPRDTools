@@ -23,6 +23,7 @@ rename_table <- function(db_path,
   query <- DBI::dbSendStatement(connex,paste0("ALTER TABLE ",old_name," RENAME TO ",new_name,";"))
   DBI::dbClearResult(query)
   loaded_tables <- DBI::dbListTables(connex)
+  DBI::dbDisconnect(connex)
   out_list <- list("database_location" = db_path,
                    "before_rename" = before_tables,
                    "old_table_name"= old_name,
@@ -30,6 +31,5 @@ rename_table <- function(db_path,
                    "after_rename" = loaded_tables
   )
   return(out_list)
-  DBI::dbDisconnect(connex)
   rm(connex,db_path,old_name, new_name,loaded_tables)
 }
