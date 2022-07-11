@@ -37,38 +37,23 @@ load_additional <- function(db_path,
   if(all(table_name%in%loaded_tables) & overwrite==T){DBI::dbRemoveTable(connex,table_name)
     message(cat(crayon::red(paste0("-------Overwrite = TRUE, DELETION OF ",table_name," COMPLETE-------\n"))))}
   ifelse(type==".txt",
-         {tmp=readr::read_tsv(file_location)
-          RSQLite::dbWriteTable(connex,name=table_name,
-                       value=tmp,
-                       append=T)},{
-                         ifelse(type==".dta",
-                                {temp=haven::read_dta(file_location)
-                                RSQLite::dbWriteTable(connex,name=table_name,
-                                              value=tmp,
-                                              append=T)},{
-                                                ifelse(type==".csv",
-                                                       {tmp=readr::read_csv2(file_location)
-                                                        RSQLite::dbWriteTable(connex,name=table_name,
-                                                                     value=tmp,
-                                                                     append=T)},{
-                                                                       ifelse(type==".rds",
-                                                                              {tmp=readRDS(file_location)
-                                                                                SQLite::dbWriteTable(connex,name=table_name,
-                                                                                            value=tmp,
-                                                                                            append=T)},{
-                                                                                              ifelse(type %in%c(".excel",".xl",".xls",".xlsx"),
-                                                                                                     {tmp==readxl::read_excel(file_location)
-                                                                                                       RSQLite::dbWriteTable(connex,name=table_name,
-                                                                                                                   value=tmp,
-                                                                                                                   append=T)},{
-                                                                                                                     stop("Review file type. Only .txt, .csv, .dta, .rds, .excel, .xl, .xls , .xlsx allowed")}
-                                                                                              )}
-                                                                       )}
-                                                )}
-                         )}
+    {RSQLite::dbWriteTable(connex,name=table_name,value=readr::read_tsv(file_location),append=T)},{
+      ifelse(type==".dta",
+        {RSQLite::dbWriteTable(connex,name=table_name,value=haven::read_dta(file_location),append=T)},{
+          ifelse(type==".csv",
+            {RSQLite::dbWriteTable(connex,name=table_name,value=readr::read_csv2(file_location),append=T)},{
+              ifelse(type==".rds",
+                {SQLite::dbWriteTable(connex,name=table_name,value=readRDS(file_location),append=T)},{
+                  ifelse(type %in%c(".excel",".xl",".xls",".xlsx"),
+                    {RSQLite::dbWriteTable(connex,name=table_name,value=readxl::read_excel(file_location),append=T)},{
+                      stop("Review file type. Only .txt, .csv, .dta, .rds, .excel, .xl, .xls , .xlsx allowed")}
+                  )}
+              )}
+          )}
+      )}
   )
   message(cat(crayon::green(paste0("----------LOAD OF TABLE ",table_name," SUCCESSFUL----------\n"))))
-  load <- data.frame("Tab"=table_name,"byte"=as.numeric(file.size(tmp)))
+  load <- data.frame("Tab"=table_name,"byte"=as.numeric(file.size(file_location)))
   loaded_files <- data.frame(cbind(load$Tab,round(load$byte/1048576,4),round(load$byte/1073741824,4)))
   names(loaded_files) <- c("table","size_Mb","size_Gb")
   end_time <- Sys.time()

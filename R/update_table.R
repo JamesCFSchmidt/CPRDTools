@@ -43,7 +43,7 @@ update_table <- function(db_path,
     }
     RSQLite::dbWriteTable(connex,name=paste(table_name),value=tmp,append=T)
     message(cat(crayon::green(paste0("----------LOAD OF TABLE ",table_name,", FILE ",file_name," SUCCESSFUL----------\n"))))
-    l <- data.frame("Tab"=table_name,"file"=file_name, "byte"=as.numeric(file.size(tmp)))
+    l <- data.frame("Tab"=table_name,"file"=file_name, "byte"=as.numeric(file.size(file_location)))
     load <- rbind(load,l)
     rm(tmp)
   }

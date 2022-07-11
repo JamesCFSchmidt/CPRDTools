@@ -141,7 +141,7 @@ load_cprd <- function(db_path,
             }
             DBI::dbWriteTable(connex,name=paste(tables_to_load[i]),value=tmp,append=T)
             message(cat(crayon::green(paste0("----------LOAD OF TABLE ",tables_to_load[i],", FILE No. ",j," SUCCESSFUL----------\n"))))
-            l <- data.frame("Tab"=tables$Table[i],"Num"=as.numeric(j),"byte"=as.numeric(utils::object.size(tmp)),"nfile"=nfiles)
+            l <- data.frame("Tab"=tables$Table[i],"Num"=as.numeric(j),"byte"=as.numeric(file.size(files[j])),"nfile"=nfiles)
             load <- rbind(load,l)
             rm(tmp)
           }
