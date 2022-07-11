@@ -24,6 +24,7 @@ load_global <- function(db_path,
   if(!any(is.character(c(db_path,table_name)))){
     stop("Specify db_path,table_name as.char")}
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
+  start_time <- Sys.time()
   loaded_tables <- DBI::dbListTables(connex)
   if(all(table_name%in%loaded_tables) & (missing(overwrite)==T|overwrite==F)){stop("Table already exists, (re)consider overwrite")}
   if(all(table_name%in%loaded_tables) & overwrite==T){DBI::dbRemoveTable(connex,table_name)
@@ -33,11 +34,20 @@ load_global <- function(db_path,
                append=T)
   message(cat(crayon::green(paste0("----------LOAD OF TABLE ",table_name," SUCCESSFUL----------\n"))))
   loaded_tables <- DBI::dbListTables(connex)
-  out_list <- list("database_location" = db_path,
-                   "table_loaded" = table_name,
-                   "database_tables" = loaded_tables
-  )
+  load <- data.frame("Tab"=table_name,"byte"=as.numeric(utils::object.size(tmp)))
+  loaded_files <- data.frame(cbind(load$Tab,(load$byte/1024),round(load$byte/1073741824,4)))
+  names(loaded_files) <- c("table","size_Mb","size_Gb")
+  end_time <- Sys.time()
+  time_diff <- end_time-start_time
   DBI::dbDisconnect(connex)
+  out_list <- list("database_location" = db_path,
+                   "loaded_table" = table_name,
+                   "load_report" = loaded_files,
+                   "database_tables" = loaded_tables,
+                   "load_start" = start_time,
+                   "load_end" = end_time,
+                   "load_time" = time_diff
+  )
   return(out_list)
-  rm(connex,file_to_load,db_path,loaded_tables,table_name)
+  rm(connex,file_to_load,db_path,loaded_tables,table_name,load,loaded_files)
 }
