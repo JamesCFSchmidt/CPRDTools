@@ -91,7 +91,7 @@ load_table <- function(db_path,
       }
       RSQLite::dbWriteTable(connex,name=paste(table_name),value=tmp,append=T)
       message(cat(crayon::green(paste0("----------LOAD OF TABLE ",table_name,", FILE No. ",j," SUCCESSFUL----------\n"))))
-      l <- data.frame("Tab"=tables$Table,"Num"=as.numeric(j),"byte"=as.numeric(utils::object.size(tmp)),"nfile"=nfiles)
+      l <- data.frame("Tab"=tables$Table,"Num"=as.numeric(j),"byte"=as.numeric(file.size(tmp)),"nfile"=nfiles)
       load <- rbind(load,l)
       rm(tmp)
     }
@@ -100,7 +100,7 @@ load_table <- function(db_path,
   loaded_files <- data.frame(cbind(stats::aggregate(load$Tab,by=list(load$Tab),FUN=length)[1],
                                    stats::aggregate(load$Num,by=list(load$Tab),FUN=length)[2],
                                    stats::aggregate(load$nfile,by=list(load$Tab),FUN=max)[2],
-                                   stats::aggregate(load$byte,by=list(load$Tab),FUN=sum)[2]/1024,
+                                   round(stats::aggregate(load$byte,by=list(load$Tab),FUN=sum)[2]/1048576,4),
                                    round(stats::aggregate(load$byte,by=list(load$Tab),FUN=sum)[2]/1073741824,4)))
   names(loaded_files) <- c("table","load_total","file_total","size_Mb","size_Gb")
   end_time <- Sys.time()

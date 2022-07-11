@@ -43,12 +43,12 @@ update_table <- function(db_path,
     }
     RSQLite::dbWriteTable(connex,name=paste(table_name),value=tmp,append=T)
     message(cat(crayon::green(paste0("----------LOAD OF TABLE ",table_name,", FILE ",file_name," SUCCESSFUL----------\n"))))
-    l <- data.frame("Tab"=table_name,"file"=file_name, "byte"=as.numeric(utils::object.size(tmp)))
+    l <- data.frame("Tab"=table_name,"file"=file_name, "byte"=as.numeric(file.size(tmp)))
     load <- rbind(load,l)
     rm(tmp)
   }
   rm(l,m)
-  loaded_files <- data.frame(cbind(load$Tab,load$file,(load$byte/1024),round(load$byte/1073741824,4)))
+  loaded_files <- data.frame(cbind(load$Tab,load$file,round(load$byte/1048576,4),round(load$byte/1073741824,4)))
   names(loaded_files) <- c("table","file_name","size_Mb","size_Gb")
   end_time <- Sys.time()
   time_diff <- end_time-start_time

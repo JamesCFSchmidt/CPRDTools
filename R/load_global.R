@@ -34,8 +34,8 @@ load_global <- function(db_path,
                append=T)
   message(cat(crayon::green(paste0("----------LOAD OF TABLE ",table_name," SUCCESSFUL----------\n"))))
   loaded_tables <- DBI::dbListTables(connex)
-  load <- data.frame("Tab"=table_name,"byte"=as.numeric(utils::object.size(file_to_load)))
-  loaded_files <- data.frame(cbind(load$Tab,(load$byte/1024),round(load$byte/1073741824,4)))
+  load <- data.frame("Tab"=table_name,"byte"=as.numeric(file.size(file_to_load)))
+  loaded_files <- data.frame(cbind(load$Tab,round(load$byte/1048576,4),round(load$byte/1073741824,4)))
   names(loaded_files) <- c("table","size_Mb","size_Gb")
   end_time <- Sys.time()
   time_diff <- end_time-start_time
