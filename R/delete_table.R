@@ -20,12 +20,12 @@ delete_table <- function(db_path,
     DBI::dbRemoveTable(connex,remove_tables[i])
   }
   loaded_tables <- DBI::dbListTables(connex)
+  DBI::dbDisconnect(connex)
   out_list <- list("database_location" = db_path,
                    "before_drop" = before_tables,
                    "dropped_table"= remove_tables,
                    "after_drop" = loaded_tables
   )
   return(out_list)
-  DBI::dbDisconnect(connex)
   rm(connex,db_path,remove_tables,before_tables,loaded_tables,i)
 }
