@@ -91,7 +91,7 @@ load_table <- function(db_path,
       }
       RSQLite::dbWriteTable(connex,name=paste(table_name),value=tmp,append=T)
       message(cat(crayon::green(paste0("----------LOAD OF TABLE ",table_name,", FILE No. ",j," SUCCESSFUL----------\n"))))
-      l <- data.frame("Tab"=tables$Table,"Num"=as.numeric(j),"byte"=as.numeric(file.size(tmp)),"nfile"=nfiles)
+      l <- data.frame("Tab"=tables$Table,"Num"=as.numeric(j),"byte"=as.numeric(utils::object.size(tmp)),"nfile"=nfiles)
       load <- rbind(load,l)
       rm(tmp)
     }
