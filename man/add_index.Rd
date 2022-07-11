@@ -7,13 +7,13 @@
 add_index(db_path, index_name, index_table, index_field)
 }
 \arguments{
-\item{db_path}{The file path to the database location.}
+\item{db_path}{string, the file path to the database location.}
 
-\item{index_name}{The unique name given to the index.}
+\item{index_name}{string, the unique name given to the index.}
 
-\item{index_table}{The table in which the field to be indexed is located.}
+\item{index_table}{string, the table in which the field to be indexed is located.}
 
-\item{index_field}{The field to be indexed.}
+\item{index_field}{string, the field to be indexed.}
 }
 \description{
 Indexing allows for query speed improvements through the generation of an index on a specified field.
