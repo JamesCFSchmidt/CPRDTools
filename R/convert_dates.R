@@ -4,7 +4,8 @@
 #'
 #' @param data the dataset in which a field must be converted.
 #' @param date_fields string vector, the field to be converted.
-#' @param format string, the input format of the field to be converted, default '%d/%m/%Y'.
+#' @param format string, the input format of the field to be converted.
+#'  *Default '%d/%m/%Y'
 #'
 #' @export
 #'
