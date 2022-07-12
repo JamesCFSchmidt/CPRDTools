@@ -150,8 +150,8 @@ query_builder <- function(db_path,
       order=paste0("ORDER BY ",from_table,".",order_field," DESC")},{
         ifelse(tolower(order_field)%in%col_names_from & missing(order_type)==F,{
           order_type <- ifelse(substr(order_type,0,1)%in%c('A', 'a'),
-                               substr(stri_trans_toupper(order_type,locale="en"),0,3),
-                               substr(stri_trans_toupper(order_type,locale="en"),0,4))
+                               substr(stringi::stri_trans_toupper(order_type,locale="en"),0,3),
+                               substr(stringi::stri_trans_toupper(order_type,locale="en"),0,4))
           if(!any(order_type%in%c('ASC','DESC'))){
             stop('review order type, only ASC or DESC allowed')}
           paste0("ORDER BY ",from_table,".",order_field," ",order_type)},{
@@ -159,8 +159,8 @@ query_builder <- function(db_path,
               order=paste0("ORDER BY ",join_table,".",order_field," DESC")},{
                 ifelse(tolower(order_field)%in%col_names_from & missing(order_type)==F,{
                   order_type <- ifelse(substr(order_type,0,1)%in%c('A', 'a'),
-                                       substr(stri_trans_toupper(order_type,locale="en"),0,3),
-                                       substr(stri_trans_toupper(order_type,locale="en"),0,4))
+                                       substr(stringi::stri_trans_toupper(order_type,locale="en"),0,3),
+                                       substr(stringi::stri_trans_toupper(order_type,locale="en"),0,4))
                   if(!any(order_type%in%c('ASC','DESC'))){
                     stop('review order type, only ASC or DESC allowed')}
                   paste0("ORDER BY ",join_table,".",order_field," ",order_type)},
