@@ -2,8 +2,9 @@
 title: "CPRDTools: a CPRD GOLD data wrangling toolkit"
 output: pdf_document
 document: arctile
+author: James C. F. Schmidt
 bibliography: CPRDTools_ref.bib
-abstract: The analysis of large scale data, and moreover the analysis of large scale electronic health records data is become more commonplace. The ease and ability of modern data generation and capture means there is the potential across almost all industries to capture more data now, than ever before and that equates to large data resources, with CPRD no exception. These large data resources, as attractive and appealing as they may be to researchers, pose a significant problem - how to manage all that data? CPRDTools is a collection of wrapper R functions intended to simplify the loading, extraction and management of Clinical Practice Research Datalink (CPRD) GOLD specific and associated electgronic health records data. Allowing for the loading of CPRD and non-CPRD data into a SQLite based database, providing an efficient, secure and updatable repository for the data, keeing the origional source files intact. Through data queries, user-defined data are drawn allowing for subsetting, joining and filtering in a signle step, creating alaysis ready data.
+abstract: The analysis of large scale data, and moreover the analysis of large scale electronic health records data is become more commonplace. The ease and ability of modern data generation and capture means there is the potential across almost all industries to capture more data now, than ever before and that equates to large data resources, with CPRD no exception. These large data resources, as attractive and appealing as they may be to researchers, pose a significant problem - how to manage all that data? `CPRDTools` is a collection of wrapper R functions intended to simplify the loading, extraction and management of Clinical Practice Research Datalink (CPRD) GOLD specific and associated electgronic health records data. Allowing for the loading of CPRD and non-CPRD data into a SQLite based database, providing an efficient, secure and updatable repository for the data, keeing the origional source files intact. Through data queries, user-defined data are drawn allowing for subsetting, joining and filtering in a signle step, creating alaysis ready data.
     
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -197,14 +198,241 @@ first_n(db_path = DB.path,
         n = 5)
 ```
 
-## Extracting data
+### Extracting data
 Data extraction can be performed via two functions (1) the user-input defined `query_builder` function and (2) `query_direct`, the more customisable and preferred method of data extraction.
 
 The basic structure of the `query_bilder` function is
 ```{r, eval=FALSE}
+query_builder(db_path,
+              unique_obs,
+              field_list,
+              from_table,
+              join_table,
+              join_fields,
+              join_type,
+              join_on,
+              where_table,
+              where_filter,
+              order_column,
+              order_type,
+              limit_to)
+```
+This function allows for only a simple join between two tables, the main table (`from_table`) and secondary table (`join_table`). Fields can be extracted from both tables, including the field used to join the tables together (`join_on`), known as a *key* field. Additional filtering, sub-setting and restrictions of data can be done using where, order and limit inputs.
 
+A simple extract is defined as
+```{r}
+query_builder(db_path = DB.path,
+              unique_obs = T, 
+              field_list = c("patid","gender","yob","deathdate"),
+              from_table = "Patient",
+              join_table = "hes_patient",
+              join_fields = c("gen_hesid","match_rank"),
+              join_on = "patid",
+              limit_to = 5)
+```
+Here, a unique extract of `patid`, `gender`, `yob` and `deathdate` from the `Patient` table and `gen_hesid` and `match_rank` from the `hes_patient` table are extracted, joined together via the `patid` field and limited to the first 10 rows of outputted data. 
+This data can be returned directly into a dataset using
+```{r, eval=FALSE}
+data <- query_builder(db_path = DB.path,
+                      unique_obs = T, 
+                      field_list = c("patid","gender","yob","deathdate"),
+                      from_table = "Patient",
+                      join_table = "hes_patient",
+                      join_fields = c("gen_hesid","match_rank"),
+                      join_on = "patid",
+                      limit_to = 5)&query_data
 ```
 
+Building on the previous extract, now filtered for only `gender==1` and ordered by `patid` in ascending order is defined as
+```{r}
+query_builder(db_path = DB.path,
+              unique_obs = T, 
+              field_list = c("paTid","gender","yob","deathdate"),
+              from_table = "Patient",
+              join_table = "hes_patient",
+              join_fields = c("gen_hesid","match_rank"),
+              join_type = "Left",
+              join_on = "patiD",
+              where_table = "PatieNt",
+              where_filter = "geNder==1",
+              order_field = "PATID",
+              order_type = "aSC",
+              limit_to = 5)
+```
+Note that SQLite is not case sensitive. 
+
+The preferred method for data extraction is through the direct execution of SQL code defined by the user. This allows for the most customisable, comprehensive and completed data extraction, providing all the functionality found in a SQLite $\color{blue}{\texttt{SELECT}}$ statement. 
+
+A introductory overview of the $\color{blue}{\texttt{SELECT}}$ statement can be found at https://www.sqlitetutorial.net/sqlite-select/2, with the basic syntax defined as
+
+```{sql, eval=FALSE}
+SELECT DISTINCT column_list
+FROM table_list
+  JOIN table ON join_condition
+WHERE row_filter
+ORDER BY column
+LIMIT count OFFSET offset
+GROUP BY column
+HAVING group_filter;
+```
+
+To replicate the query executed using the `query_builder` function previously, the following is provided
+```{r}
+query_direct(db_path = DB.path,
+             query = "SELECT DISTINCT Patient.patid, 
+                                      Patient.gender, 
+                                      Patient.yob, 
+                                      Patient.deathdate, 
+                                      hes_patient.gen_hesid, 
+                                      hes_patient.match_rank 
+                      FROM Patient 
+                      LEFT JOIN hes_patient ON hes_patient.patid = Patient.patid
+                      LIMIT 5 ;")
+```
+The `query` here is identical to the query returned in the `$query` output in the `query_builder` function. The table from which a field should be extracted is provided before the field such as `patient.yob`, extracting `yob` from `Patient`.
+
+This query can be made more aesthetically pleasing by using an alias for the `Pateint` and `hes_patient` tables
+```{r}
+query_direct(db_path = DB.path,
+             query = "SELECT DISTINCT pat.patid, 
+                                      pat.gender as sex, 
+                                      pat.yob as bith_date, 
+                                      pat.deathdate as death, 
+                                      hes.gen_hesid as hesid, 
+                                      hes.match_rank 
+                      FROM Patient pat
+                      LEFT JOIN hes_patient hes ON hes.patid = pat.patid
+                      LIMIT 5 ;")$query_data
+```
+
+To view the procedure in which a query will be executed, use $\color{blue}{\texttt{EXPLAIN QUERY PLAN}}$. This will provide an overview of the strategy or plan SQLite will use to execute a SQL query, providing
+```{r}
+query_direct(db_path = DB.path,
+             query = "EXPLAIN QUERY PLAN
+                      SELECT DISTINCT pat.patid, 
+                                      pat.gender as sex, 
+                                      pat.yob as bith_date, 
+                                      pat.deathdate as death, 
+                                      hes.gen_hesid as hesid, 
+                                      hes.match_rank 
+                      FROM Patient pat
+                      LEFT JOIN hes_patient hes ON hes.patid = pat.patid
+                      LIMIT 5 ;")$query_data
+```
+Shows that first a full-table scan is used on the `Patient` table, followed by a subset search of the `hes_patient` table followed by a temporary b-tree structure used to defined the unique ($\color{blue}{\texttt{DISTINCT}}$) output data. A more complete overview of the $\color{blue}{\texttt{EXPLAIN QUERY PLAN}}$ command can be found at https://www.sqlite.org/eqp.html.
+
 ## Maintenace and other tasks
+
+The removal and remaining of tables and the deletion of the databases, as well as query speed improvement function make up the final section  of the `CPRDTools` package. 
+
+### Speeding up a query
+A method to improve the execution times of a query is indexing. Indexing a table or dataset creates a secondary data table containing the indexing variable and the row number (`rowid`) associated with that number. The index is initially search, returning the row numbers for the searched fields, before using these row numbers to return the required data from.
+
+Consider the following query, returning data from the `Patient` and `Clinical` tables, where the `{sql} medcodes IN (1004,1046,1076,1146,1157,1314,1425,1454,1508,1842)`, defined as
+```{r}
+query_direct(db_path = DB.path,
+             query = "EXPLAIN QUERY PLAN
+             SELECT pat.patid,
+                    pat.yob,
+                    pat.deathdate,
+                    clin.eventdate,
+                    clin.medcode
+             FROM Patient pat 
+             INNER JOIN Clinical clin ON 
+                   pat.patid = clin.patid
+             WHERE clin.medcode IN 
+             (1004,1046,1076,1146,1157,
+              1314,1425,1454,1508,1842);")
+```
+Executing the $\color{blue}{\texttt{EXPLAIN QUERY PLAN}}$ command provides 
+```{r, echo=FALSE}
+query_direct(db_path = DB.path,
+             query = "EXPLAIN QUERY PLAN
+             SELECT pat.patid,
+                    pat.yob,
+                    pat.deathdate,
+                    clin.eventdate,
+                    clin.medcode
+             FROM Patient pat 
+             INNER JOIN Clinical clin ON 
+                   pat.patid = clin.patid
+             WHERE clin.medcode IN 
+             (1004,1046,1076,1146,1157,
+              1314,1425,1454,1508,1842);")$query_data
+```
+Using a full-table scan of the clinical table for the desired `medcodes` before using an automatically generated, temporary index on `patid`.
+
+An index can be defined on the `clinical` table using the `medcodes` as 
+```{r}
+add_index(db_path = DB.path,
+          index_name = "clinical_index",
+          index_table = "clinical",
+          index_field = "medcode")
+```
+
+Now the query plan shows 
+```{r, echo=FALSE}
+query_direct(db_path = DB.path,
+             query = "EXPLAIN QUERY PLAN
+             SELECT pat.patid,
+                    pat.yob,
+                    pat.deathdate,
+                    clin.eventdate,
+                    clin.medcode
+             FROM Patient pat 
+             INNER JOIN Clinical clin ON 
+                   pat.patid = clin.patid
+             WHERE clin.medcode IN 
+             (1004,1046,1076,1146,1157,
+              1314,1425,1454,1508,1842);")$query_data
+```
+First using the `clinical_index` to retrieve the desired `medcodes` before completing the rest of the query. The speed improvements are dependent on the complexity of the data, the query and the size of the data. There is a once-off execution time cost in indexing data but for large, complex datasets where queries rely on searching lists of medical codes, for instance, this may be beneficial to the user.
+
+If a SQL statement must be passed directly to the database, specifically for maintenance or speed improvements, the `statement_direct` function is used. If the index created previously were to be deleted, the following is used
+```{r}
+statement_direct(db_path = DB.path,
+                 statement = "DROP INDEX clinical_index;")
+```
+`statement_direct` provides no output data and so should only be used for maintenance and speed improvement tasks such as $\color{blue}{\texttt{UPDATE, DELETE, INSERT INTO, DROP TABLE}}$ etc.
+
+### Convert fields to dates
+Often date fields are provided in datasets in the format of a date ('12/03/1989') but read as a character variable into the database. To convert a field to a date field use
+```{r}
+data <- query_direct(db_path = DB.path,
+                     query = "SELECT* FROM Practice;")$query_data
+str(data)
+convert_data <- convert_dates(data = data,
+                              date_fields = c("lcd","uts"),
+                              format = "%Y-%m-%d")$convert_data
+str(convert_data)
+```
+Here the format provided is the format the fields are prior to conversion and not the desired output required, with the default set to '%d/%m/%Y'.
+
+### Maintenance
+in order to rename a table in the database, use
+```{r}
+rename_table(db_path = DB.path,
+             old_name = "practice",
+             new_name = "gp_pracs")
+```
+
+While to remove an entire table from the database, the following is used
+```{r}
+delete_table(db_path = DB.path, 
+           remove_tables = "gp_pracs")
+```
+
+For the complete deletion of a database, use with caution 
+```{r, eval =FALSE}
+delete_db(db_path = DB.path)
+```
+This will require the inputting of confirmation of the deletion into the `Console`
+```{r, echo=FALSE}
+message(cat(crayon::red("----------WARNING, DELETION IN PROGRESS----------\n")))
+message(cat(crayon::blue("Press y+[enter] to proceed, n+[enter] to stop:\n")))
+```
+
+# Conclusion
+`CPRDTools` provides a comprehensive set of function to aid the general loading, maintenance and extraction of CPRD GOLD and its associated and peripheral data. These functions should provide a *toolkit* to any researcher, aiding in there ability to self-manage their data using an efficient and reliable SQLite data repository, providing tools to view, interrogate, load, extract, maintain, convert and delete in a single package.  
 
 # References
