@@ -40,7 +40,7 @@ The functions within 'CPRDTools' broadly fall into three groups, categorised by 
 ## The data
 
 ```{r, include=FALSE}
-DB.path="/rfs/LRWE_Proj59/jcfs2/Test"
+DB.path = "/rfs/LRWE_Proj59/jcfs2/Test"
 FILE.path = "/rfs/LRWE_Proj59/jcfs2/Test"
 ```
 
