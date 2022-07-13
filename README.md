@@ -56,7 +56,7 @@ together in a query.<br/> **Record** – single row of information.<br/>
 “ess-cue-ell”, is a coding langue used is database management systems,
 such as MySQL or SQLite.<br/>
 
-## Instalation
+## Installation
 
 You can install the development version of CPRDTools from
 [GitHub](https://github.com/) with:
