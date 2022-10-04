@@ -54,12 +54,12 @@ Before loading any data into the database, it is best practice to understand the
 ### Listing available data
 
 The `list_files` function provides a list of all files of a specified type in a specified location. To view all text (`.txt`) files in the data location
-```{r, include = FALSE}
+```{r}
 list_files(file_location = FILE.path,
            file_type = ".txt")
 ```
-To view all compressed/*zipped* (`.zip`) files in the data location
-```{r, include = FALSE}
+To view all compressed (`.zip`) files in the data location
+```{r}
 list_files(file_location = FILE.path,
            file_type = ".zip")
 ```           
@@ -70,23 +70,23 @@ list_files(file_location = FILE.path,
 ```
 
 From the above it can be seen that there are six zipped text files (`.zip`), one excel file (`.xlsx`), one standard text file (`.txt`) and a folder, `patient`.
-In order to view CPRD GOLD specific files, corresponding to names CPRD GOLD datasets (*patient, practice, staff, consultation, clinical, additional clinical details, referral, immunisation, test and therapy*), the `list_cprd` function is used. This function provides the core functionality to the loading of CPRD GOLD data, generating a list of CPRD GOLD specific files in the specified location.
+In order to view the CPRD GOLD specific files, corresponding to named CPRD GOLD datasets (*patient, practice, staff, consultation, clinical, additional clinical details, referral, immunisation, test and therapy*), the `list_cprd` function is used. This function provides the core functionality to the loading of CPRD GOLD data, generating a list of all the CPRD GOLD specific files in the specified data location.
 ```{r}
 list_cprd(file_location = FILE.path,
           folder = F, 
           zip = T)
 ```
-Here the folders input is defined as `r FALSE`, showing only zipped data contained in the data location specified. When the folder input is `r TRUE`, the available data found in the `patient` folder is displayed.
+Here the folders input is defined as `r folder=F`, showing only the `.zip` files data contained in the data location. The `.txt` file is ignored as this is not a CPRD GOLD dataset. When the folder input is changed to `r folder=T`, the available data found in the `patient` folder is displayed.
 ```{r}
 list_cprd(file_location = FILE.path,
           folder = T, 
           zip = T)
 ```
-In the `$table` output, the `list_cprd` function defines the tables and the count of *raw* files associated with that table in the data location. This outputted list is core to the automated loading of CPRD data, using the tables and files in each table to load all or a selection of specified CPRD GOLD files.  
+In the `$table` output, the `list_cprd` function defines the CPRD GOLD tables and the count of *raw* files associated with that CPRD GOLD table in the data location. This outputted list is core to the automated loading of CPRD GOLD data, using the names CPRD GOLD tables and files to load all or a selection of specified CPRD GOLD tables  
 
 ### Loading all available data
 
-The `load_cprd` function, relying on the `list_cprd` function for file and table list from a specified data location is able to automatically load in a selection or all available CPRD GOLD files in a specified location. Importing, uncompressing (unzipping) and appending all files from a CPRD GOLD-specific table into a database.
+The `load_cprd` function (relying internally on the `list_cprd` function for the list of files and table in the data location) is able to automatically load in all or a selection available CPRD GOLD files in the specified data location. Importing, uncompressing (unzipping) and appending all files from a CPRD GOLD-specific table into a database.
 
 To load the `patient` data into a new database, the `load_cprd` function is defined as 
 ```{r}
