@@ -88,33 +88,26 @@ load_cprd <- function(db_path,
       }
     }
   }
-  cprd_f <- data.frame()
-  for(i in 1:nrow(cprd_files_list)){
-    f <- substr(cprd_files_list[i,1], nchar(file_location)+1,nchar(cprd_files_list[i,1]))
-    cprd_f <- rbind(cprd_f,f)
-  }
+
   if(dim(cprd_f)[1]==0){
     stop("Error in file_location or subfolder specification, folder=T")}
-  n <- length(cprd_f[,1])
-  cprd_f$table <- 0
+  n <- length(cprd_files_list[,1])
+  cprd_files_list$table <- 0
   for(i in 1:n_cprd){
     for(j in 1:n){
       if(stringr::str_detect(tolower(
-        substr(cprd_f[j,1],regexpr("\\/[^\\/]*$",
-                                            cprd_f[j,1])+1,
-               nchar(as.character(cprd_f[j,1])))),
+        substr(cprd_files_list[j,1],regexpr("\\/[^\\/]*$",
+                                            cprd_files_list[j,1])+1,
+               nchar(as.character(cprd_files_list[j,1])))),
         tolower(cprd_files[i]))){
-        cprd_f[j,2] = cprd_files[i]}
+        cprd_files_list[j,2] = cprd_files[i]}
     }
   }
-  tables <- data.frame("Table"=sort(unique(cprd_f$table)),
-                       "File_Count"=stats::aggregate(cprd_f$table,
-                                              by=list(cprd_f$table),
+  tables <- data.frame("Table"=sort(unique(cprd_files_list$table)),
+                       "File_Count"=aggregate(cprd_files_list$table,
+                                              by=list(cprd_files_list$table),
                                               FUN=length)[,2])
-  rm(i,j,file_location,n)
-  cprd_f <- cprd_f[order(cprd_f$table),]
-  colnames(cprd_f) <- c("files","table")
-
+  rm(i,j,n)
    if(any(tolower(tables_to_load)=="all")){
     if(any(tolower(cprd_files)%in%tolower(loaded_tables))){
       stop("tables_to_load='all': some tables already loaded into database, speficy tables_to_load as list or individually")}else{
@@ -194,6 +187,14 @@ load_cprd <- function(db_path,
   end_time <- Sys.time()
   time_diff <- end_time-start_time
   loaded_tables <- DBI::dbListTables(connex)
+
+  cprd_f <- data.frame()
+  for(i in 1:nrow(cprd_files_list)){
+    f <- substr(cprd_files_list[i,1], nchar(file_location)+1,nchar(cprd_files_list[i,1]))
+    cprd_f <- rbind(cprd_f,f)
+  }
+  cprd_f <- cbind(cprd_f,cprd_files_list[,2])
+  colnames(cprd_f) <- c("files","table")
   out_list <- list("database_location" = db_path,
                    "files_in_location" = cprd_f,
                    "tables_in_location" = tables,
@@ -206,6 +207,6 @@ load_cprd <- function(db_path,
   )
   DBI::dbDisconnect(connex)
   return(out_list)
-  rm(connex,db_path,tables_to_load,loaded_tables,tables,date_cols,cprd_f,f,
+  rm(connex,db_path,tables_to_load,loaded_tables,tables,date_cols,cprd_f,f,file_location,
      overwrite,load_mapping,zip,load,start_time,end_time,time_diff,n_cprd)
 }
