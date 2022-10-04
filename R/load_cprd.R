@@ -103,8 +103,8 @@ load_cprd <- function(db_path,
         cprd_files_list[j,2] = cprd_files[i]}
     }
   }
-  tables <- data.frame("Table"=sort(unique(cprd_files_list$table)),
-                       "File_Count"=aggregate(cprd_files_list$table,
+  tables <- data.frame("table"=sort(unique(cprd_files_list$table)),
+                       "file_count"=aggregate(cprd_files_list$table,
                                               by=list(cprd_files_list$table),
                                               FUN=length)[,2])
   rm(i,j,n)
