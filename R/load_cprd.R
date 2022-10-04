@@ -103,8 +103,8 @@ load_cprd <- function(db_path,
         substr(cprd_f[j,1],regexpr("\\/[^\\/]*$",
                                             cprd_f[j,1])+1,
                nchar(as.character(cprd_f[j,1])))),
-        tolower(cprd_cprd_f[i]))){
-        cprd_f[j,2] = cprd_cprd_f[i]}
+        tolower(cprd_files[i]))){
+        cprd_f[j,2] = cprd_files[i]}
     }
   }
   tables <- data.frame("Table"=sort(unique(cprd_f$table)),
