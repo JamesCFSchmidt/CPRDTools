@@ -187,7 +187,6 @@ load_cprd <- function(db_path,
   end_time <- Sys.time()
   time_diff <- end_time-start_time
   loaded_tables <- DBI::dbListTables(connex)
-
   cprd_f <- data.frame()
   for(i in 1:nrow(cprd_files_list)){
     f <- substr(cprd_files_list[i,1], nchar(file_location)+1,nchar(cprd_files_list[i,1]))
@@ -207,6 +206,6 @@ load_cprd <- function(db_path,
   )
   DBI::dbDisconnect(connex)
   return(out_list)
-  rm(connex,db_path,tables_to_load,loaded_tables,tables,date_cols,cprd_f,f,file_location,
-     overwrite,load_mapping,zip,load,start_time,end_time,time_diff,n_cprd)
+  rm(connex,db_path,folder,tables_to_load,loaded_tables,tables,date_cols,cprd_f,f,file_location,cprd_files_list,
+     overwrite,load_mapping,zip,load,start_time,end_time,time_diff,n_cprd,i,cprd_files)
 }
