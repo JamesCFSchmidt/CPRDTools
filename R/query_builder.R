@@ -36,8 +36,6 @@ query_builder <- function(db_path,
                           order_field,
                           order_type,
                           limit_to){
-  #===============================
-  #errors--------------------------
   if(missing(db_path)){
     stop("Specify database file path location")}
   if(missing(field_list)){
@@ -73,21 +71,17 @@ query_builder <- function(db_path,
   connex <- DBI::dbConnect(RSQLite::SQLite(),dbname=paste0(db_path,"/database.db"))
   start_time <- Sys.time()
   loaded_tables <- tolower(DBI::dbListTables(connex))
-  #unique observations-------------
   distinct <- ifelse(missing(unique_obs),"",{
     if(!is.logical(unique_obs)){
       stop("Specify unique_obs as logical T/F")}
     ifelse(unique_obs==T,"DISTINCT","")})
-  #extract table-------------------
   if(tolower(from_table)%in%loaded_tables==F){
     stop("Review main table for extract")}
-  #column extract list-------------
   col_names_from <- tolower(DBI::dbListFields(connex,from_table))
   if(any(field_list%in%c("ALL","All","all","*"))){field_list=col_names_from}else{
     if(!all(tolower(field_list)%in%col_names_from)){
       stop("Review extract column(s) specified")}
   }
-  #columns in join table-----------
   col_names_join = NULL
   j_l = NULL
   if( missing(join_table)&!missing(join_on)&!missing(join_fields)|
@@ -111,7 +105,6 @@ query_builder <- function(db_path,
   }
   col_names <- unique(append(col_names_from,col_names_join))
   rm(j)
-  #join----------------------------
   join <- ifelse(missing(join_table)&missing(join_on),"",{
     ifelse(missing(join_table)&missing(join_on)==F|missing(join_table)==F&missing(join_on),{
       stop("Review join columns or table specified for join")},{
@@ -135,7 +128,6 @@ query_builder <- function(db_path,
       })
   })
   rm(j1,j2)
-  #where condition-----------------
   where <- ifelse(missing(where_filter),
                   "",
                   paste0("WHERE ",
@@ -144,7 +136,6 @@ query_builder <- function(db_path,
                                 where_table),
                          ".",
                          where_filter))
-  #order condition-----------------
   order <- ifelse(missing(order_field),"",{
     ifelse(tolower(order_field)%in%col_names_from & missing(order_type),{
       order=paste0("ORDER BY ",from_table,".",order_field," DESC")},{
@@ -170,8 +161,7 @@ query_builder <- function(db_path,
         )}
     )}
   )
-  #limit number of rows------------
-  limit <- ifelse(missing(limit_to),"",{
+ limit <- ifelse(missing(limit_to),"",{
     ifelse(!is.numeric(limit_to),{
       stop("Specify limit_to as numeric")},{
       paste0("LIMIT ",limit_to)})
@@ -204,7 +194,7 @@ query_builder <- function(db_path,
   time_diff <- end_time-start_time
   loaded_tables <- DBI::dbListTables(connex)
   DBI::dbDisconnect(connex)
-  out_list <- list("database_location" = db_path,
+    out_list <- list("database_location" = db_path,
                    "database_tables" = loaded_tables,
                    "query" = query,
                    "query_data" = query_data,
