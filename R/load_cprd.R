@@ -110,7 +110,7 @@ load_cprd <- function(db_path,
    if(any(tolower(tables_to_load)=="all")){
     if(any(tolower(cprd_files)%in%tolower(loaded_tables))){
       stop("tables_to_load='all': some tables already loaded into database, speficy tables_to_load as list or individually")}else{
-        tables_to_load=tables$Table}}else{
+        tables_to_load=tables$table}}else{
           for(i in 1:length(tables_to_load)){
             if(any(tolower(tables_to_load)%in%tolower(loaded_tables)) & missing(overwrite)){stop("Table already exists, consider overwrite")}else{
               if(any(tolower(tables_to_load)%in%tolower(loaded_tables)) & overwrite==F){stop("Table already exists, reconsider overwrite")}else{
@@ -124,7 +124,7 @@ load_cprd <- function(db_path,
   load <- data.frame()
   if(!all(tables_to_load %in% c("ALL","all","All"))){
     for(i in 1:length(tables_to_load)){
-      if(tolower(tables_to_load[i])%in%tolower(tables$Table)==F){
+      if(tolower(tables_to_load[i])%in%tolower(tables$table)==F){
         stop("Review tables specified for loading or subfoldering of file, folder=T")}else{
           files <- as.matrix(cprd_files_list[which(tolower(cprd_files_list[,2])==tolower(tables_to_load[i])),][,1])
           nfiles <- length(files)
@@ -140,7 +140,7 @@ load_cprd <- function(db_path,
             }
             DBI::dbWriteTable(connex,name=paste(tables_to_load[i]),value=tmp,append=T)
             message(cat(crayon::green(paste0("----------LOAD OF TABLE ",tables_to_load[i],", FILE No. ",j," SUCCESSFUL----------\n"))))
-            l <- data.frame("Tab"=tables$Table[i],"Num"=as.numeric(j),"byte"=as.numeric(file.size(files[j])),"nfile"=nfiles)
+            l <- data.frame("Tab"=tables$table[i],"Num"=as.numeric(j),"byte"=as.numeric(file.size(files[j])),"nfile"=nfiles)
             load <- rbind(load,l)
             rm(tmp)
           }
@@ -148,8 +148,8 @@ load_cprd <- function(db_path,
         }
     }
   }else{
-    for(i in 1:length(tables$Table)){
-      files <- as.matrix(cprd_files_list[which(tolower(cprd_files_list[,2])==tolower(tables$Table[i])),][,1])
+    for(i in 1:length(tables$table)){
+      files <- as.matrix(cprd_files_list[which(tolower(cprd_files_list[,2])==tolower(tables$table[i])),][,1])
       nfiles <- length(files)
       for(j in 1:length(files)){
         tmp <- readr::read_delim(files[j],"\t",escape_double=F,col_names=T,t=T)
@@ -161,9 +161,9 @@ load_cprd <- function(db_path,
         if("pracid" %in% names(tmp)==F){
           tmp$pracid <- as.numeric(substr(tmp$patid,nchar(tmp$patid)-2,nchar(tmp$patid)))
         }
-        DBI::dbWriteTable(connex,name=paste(tables$Table[i]),value=tmp,append=T)
-        message(cat(crayon::green(paste0("----------LOAD OF TABLE ",tables$Table[i],", FILE No. ",j," SUCCESSFUL----------\n"))))
-        l <- data.frame("Tab"=tables$Table[i],"Num"=as.numeric(j),"byte"=as.numeric(file.size(tmp)),"nfile"=nfiles)
+        DBI::dbWriteTable(connex,name=paste(tables$table[i]),value=tmp,append=T)
+        message(cat(crayon::green(paste0("----------LOAD OF TABLE ",tables$table[i],", FILE No. ",j," SUCCESSFUL----------\n"))))
+        l <- data.frame("Tab"=tables$table[i],"Num"=as.numeric(j),"byte"=as.numeric(file.size(tmp)),"nfile"=nfiles)
         load <- rbind(load,l)
         rm(tmp,date_col)
       }

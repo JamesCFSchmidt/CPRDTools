@@ -74,7 +74,7 @@ load_table <- function(db_path,
     }
   }
   load <- data.frame()
-  if(!tolower(table_name)%in%tolower(tables$Table)){
+  if(!tolower(table_name)%in%tolower(tables$table)){
     stop("Review table specified for loading")}
   else{
     files <- as.matrix(cprd_files_list[which(tolower(cprd_files_list[,2])==tolower(table_name)),][,1])
@@ -91,7 +91,7 @@ load_table <- function(db_path,
       }
       RSQLite::dbWriteTable(connex,name=paste(table_name),value=tmp,append=T)
       message(cat(crayon::green(paste0("----------LOAD OF TABLE ",table_name,", FILE No. ",j," SUCCESSFUL----------\n"))))
-      l <- data.frame("Tab"=tables$Table,"Num"=as.numeric(j),"byte"=as.numeric(file.size(files[j])),"nfile"=nfiles)
+      l <- data.frame("Tab"=tables$table,"Num"=as.numeric(j),"byte"=as.numeric(file.size(files[j])),"nfile"=nfiles)
       load <- rbind(load,l)
       rm(tmp)
     }
