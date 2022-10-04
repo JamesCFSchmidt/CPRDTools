@@ -77,7 +77,7 @@ query_builder <- function(db_path,
   distinct <- ifelse(missing(unique_obs),"",{
     if(!is.logical(unique_obs)){
       stop("Specify unique_obs as logical T/F")}
-    ifelse(unique_obs==T," DISTINCT ","")})
+    ifelse(unique_obs==T,"DISTINCT","")})
   #extract table-------------------
   if(tolower(from_table)%in%loaded_tables==F){
     stop("Review main table for extract")}
