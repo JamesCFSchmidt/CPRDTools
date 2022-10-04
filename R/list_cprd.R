@@ -87,6 +87,7 @@ list_cprd <- function(file_location,
                                               by=list(files$table),
                                               FUN=length)[,2])
   files <- files[order(files$table),]
+  colnames(files) <- c("Files","Table")
   out_list <- list("file_location" = file_location,
                    "all_files_tables" = files,
                    "tables" = tables
