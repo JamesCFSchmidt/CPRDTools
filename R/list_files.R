@@ -22,9 +22,14 @@ list_files <- function(file_location,
                                                 pattern=file_type,
                                                 full.names=T))
   }
+  files <- data.frame()
+  for(i in 1:nrow(files_list)){
+    f <- substr(files_list[i,1], nchar(file_location)+1,nchar(files_list[i,1]))
+    files <- rbind(files,f)
+  }
   out_list <- list("file_location" = file_location,
-                   "files" = files_list
+                   "files" = files
   )
   return(out_list)
-  rm(file_location,files_list)
+  rm(file_location,files_list,files,f)
 }
