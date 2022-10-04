@@ -60,8 +60,8 @@ load_table <- function(db_path,
         cprd_files_list[j,2] = cprd_files[i]}
     }
   }
-  tables <- data.frame("Table"=sort(unique(cprd_files_list$table)),
-                       "File_Count"=stats::aggregate(cprd_files_list$table,
+  tables <- data.frame("table"=sort(unique(cprd_files_list$table)),
+                       "file_count"=stats::aggregate(cprd_files_list$table,
                                               by=list(cprd_files_list$table),
                                               FUN=length)[,2])
   rm(i,j,file_location,n)
@@ -107,8 +107,17 @@ load_table <- function(db_path,
   time_diff <- end_time-start_time
   loaded_tables <- DBI::dbListTables(connex)
   DBI::dbDisconnect(connex)
+
+  cprd_f <- data.frame()
+  for(i in 1:nrow(cprd_files_list)){
+    f <- substr(cprd_files_list[i,1], nchar(file_location)+1,nchar(cprd_files_list[i,1]))
+    cprd_f <- rbind(cprd_f,f)
+  }
+  cprd_f <- cbind(cprd_f,cprd_files_list[,2])
+  colnames(cprd_f) <- c("files","table")
+
   out_list <- list("database_location" = db_path,
-                   "files_in_location" = cprd_files_list,
+                   "files_in_location" = cprd_f,
                    "tables_in_location" = tables,
                    "loaded_table" = table_name,
                    "load_report" = loaded_files,
