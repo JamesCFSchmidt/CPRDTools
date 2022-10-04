@@ -40,14 +40,7 @@ The functions within 'CPRDTools' broadly fall into three groups, categorised by 
 ## The data
 
 The example data supplied with this package resembles CPRD GOLD data in layout and in file naming convention. Additionally included are example secondary files from 'Hospital Episode Statistics' (HES) patient information and 'Office for National Statistics' (ONS) actuarial life tables. The location of the file and the location where the database will be build must be provided
-```{r, eval=FALSE, echo=TRUE}
-#database location
-DB.path = "/home/j/jcfs2/Documents/Test"
-#location of example data
-FILE.path = dirname(system.file("extdata", "hes_patient_20336R.txt", package = "CPRDTools"))
-```
-
-```{r, include = FALSE}
+```{r}
 #database location
 DB.path = "/home/j/jcfs2/Documents/Test"
 #location of example data
