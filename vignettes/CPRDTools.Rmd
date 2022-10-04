@@ -27,7 +27,7 @@ SQLite is an opensource, SQL based database engine [@sqlite]. The use of a SQLit
 This document aims to provide a simple and introductory overview of `CPRDTools` and its application to arbitrary (fictional) data. This data though are provided in the manner in which many CPRD data extract are received, where data are spread over multiple files and often located in sub-folders.
 
 `CPRDTools` is loaded using:
-```{r, message=FALSE}
+```{r, message=F, error=F, warning = F}
 library(devtools)
 install_github("JamesCFSchmidt/CPRDTools")
 library(CPRDTools)
@@ -40,7 +40,7 @@ The functions within 'CPRDTools' broadly fall into three groups, categorised by 
 ## The data
 
 The example data supplied with this package resembles CPRD GOLD data in layout and in file naming convention. Additionally included are example secondary files from 'Hospital Episode Statistics' (HES) patient information and 'Office for National Statistics' (ONS) actuarial life tables. The location of the file and the location where the database will be build must be provided
-```{r}
+```{r, message=F}
 #database location
 DB.path = "/home/j/jcfs2/Documents/Test"
 #location of example data
