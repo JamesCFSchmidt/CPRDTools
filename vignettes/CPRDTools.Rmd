@@ -152,7 +152,9 @@ Here `r overwrite=T` as the practice table was previously loaded.
 If you were to receive a new month or year of `patient` data, this would be append to the data already contained in the database using
 ```{r, eval=FALSE}
 update_table(db_path = DB.path,
-             file_location = system.file("extdata", "aa1_Extract_Patient_001.zip", package = "CPRDTools"),
+             file_location = system.file("extdata", 
+                                         "aa1_Extract_Patient_001.zip", 
+                                         package = "CPRDTools"),
              table_name = "PaTient")
 ```
 Note that capitalisation of the table name for CPRD-specific tables in unimportant. In general, SQL and therefore SQLite is not case sensitive. 
@@ -162,7 +164,9 @@ Note that capitalisation of the table name for CPRD-specific tables in unimporta
 For peripheral or additional data, whether CPRD or non-CPRD specific, the use of the `load_additional` function is employed. This function loads a singular file into a table (new or existing). 
 ```{r}
 load_additional(db_path = DB.path,
-                file_location = system.file("extdata", "hes_patient_20336R.txt", package = "CPRDTools"),
+                file_location = system.file("extdata", 
+                                            "hes_patient_20336R.txt", 
+                                            package = "CPRDTools"),
                 type = ".txt",
                 table_name = "hes_patient",
                 overwrite = F)
