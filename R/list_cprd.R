@@ -63,29 +63,34 @@ list_cprd <- function(file_location,
       }
     }
   }
-  if(dim(cprd_files_list)[1]==0){
+  files <- data.frame()
+  for(i in 1:nrow(cprd_files_list)){
+    f <- substr(cprd_files_list[i,1], nchar(file_location)+1,nchar(cprd_files_list[i,1]))
+    files <- rbind(files,f)
+  }
+  if(dim(files)[1]==0){
     stop("Error in file_location or subfolder specification, folder=T")}
-  n <- length(cprd_files_list[,1])
-  cprd_files_list$table <- 0
+  n <- length(files[,1])
+  files$table <- 0
   for(i in 1:n_cprd){
     for(j in 1:n){
       if(stringr::str_detect(tolower(
-        substr(cprd_files_list[j,1],regexpr("\\/[^\\/]*$",
-                                            cprd_files_list[j,1])+1,
-               nchar(as.character(cprd_files_list[j,1])))),
+        substr(files[j,1],regexpr("\\/[^\\/]*$",
+                                            files[j,1])+1,
+               nchar(as.character(files[j,1])))),
         tolower(cprd_files[i]))){
-        cprd_files_list[j,2] = cprd_files[i]}
+        files[j,2] = cprd_files[i]}
     }
   }
-  tables <- data.frame("Table"=sort(unique(cprd_files_list$table)),
-                       "File_Count"=stats::aggregate(cprd_files_list$table,
-                                              by=list(cprd_files_list$table),
+  tables <- data.frame("Table"=sort(unique(files$table)),
+                       "File_Count"=stats::aggregate(files$table,
+                                              by=list(files$table),
                                               FUN=length)[,2])
-  cprd_files_list <- cprd_files_list[order(cprd_files_list$table),]
+  files <- files[order(files$table),]
   out_list <- list("file_location" = file_location,
-                   "all_files_tables" = cprd_files_list,
+                   "all_files_tables" = files,
                    "tables" = tables
   )
   return(out_list)
-  rm(i,j,file_location,n,n_cprd)
+  rm(i,j,file_location,n,n_cprd,files,f)
 }
