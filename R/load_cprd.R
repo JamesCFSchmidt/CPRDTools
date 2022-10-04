@@ -89,7 +89,7 @@ load_cprd <- function(db_path,
     }
   }
 
-  if(dim(cprd_f)[1]==0){
+  if(dim(cprd_files_list)[1]==0){
     stop("Error in file_location or subfolder specification, folder=T")}
   n <- length(cprd_files_list[,1])
   cprd_files_list$table <- 0
