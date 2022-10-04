@@ -64,7 +64,7 @@ load_table <- function(db_path,
                        "file_count"=stats::aggregate(cprd_files_list$table,
                                               by=list(cprd_files_list$table),
                                               FUN=length)[,2])
-  rm(i,j,file_location,n)
+  rm(i,j,n)
   cprd_files_list <- cprd_files_list[order(cprd_files_list$table),]
   if(any(tolower(table_name)%in%tolower(loaded_tables))&missing(overwrite)){stop("Table already exists, consider overwrite")}else{
     if(any(tolower(table_name)%in%tolower(loaded_tables))&overwrite==F){stop("Table already exists, reconsider overwrite")}else{
@@ -107,7 +107,6 @@ load_table <- function(db_path,
   time_diff <- end_time-start_time
   loaded_tables <- DBI::dbListTables(connex)
   DBI::dbDisconnect(connex)
-
   cprd_f <- data.frame()
   for(i in 1:nrow(cprd_files_list)){
     f <- substr(cprd_files_list[i,1], nchar(file_location)+1,nchar(cprd_files_list[i,1]))
