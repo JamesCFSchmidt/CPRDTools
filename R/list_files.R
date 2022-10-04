@@ -27,6 +27,7 @@ list_files <- function(file_location,
     f <- substr(files_list[i,1], nchar(file_location)+1,nchar(files_list[i,1]))
     files <- rbind(files,f)
   }
+  colnames(files) <- "Files"
   out_list <- list("file_location" = file_location,
                    "files" = files
   )
