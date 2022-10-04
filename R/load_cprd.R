@@ -205,6 +205,6 @@ load_cprd <- function(db_path,
   )
   DBI::dbDisconnect(connex)
   return(out_list)
-  rm(connex,db_path,tables_to_load,loaded_tables,tables,date_cols,cprd_f,f
+  rm(connex,db_path,tables_to_load,loaded_tables,tables,date_cols,cprd_f,f,
      overwrite,load_mapping,zip,load,start_time,end_time,time_diff,n_cprd)
 }
