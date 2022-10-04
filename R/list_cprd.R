@@ -82,12 +82,12 @@ list_cprd <- function(file_location,
         files[j,2] = cprd_files[i]}
     }
   }
-  tables <- data.frame("Table"=sort(unique(files$table)),
-                       "File_Count"=stats::aggregate(files$table,
+  tables <- data.frame("table"=sort(unique(files$table)),
+                       "file_count"=stats::aggregate(files$table,
                                               by=list(files$table),
                                               FUN=length)[,2])
   files <- files[order(files$table),]
-  colnames(files) <- c("Files","Table")
+  colnames(files) <- c("files","table")
   out_list <- list("file_location" = file_location,
                    "all_files_tables" = files,
                    "tables" = tables
